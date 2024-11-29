@@ -34,12 +34,12 @@ const About = () => {
         <div id="about" className="min-h-screen w-screen">
             <div className="relative mb-8 mt-36 flex flex-col items-center gap-5">
                 <h2 className="font-general text-sm uppercase md:text-[20px]">Welcome to GoBus</h2>
-                <AnimatedTitle title="R<b>e</b>d<b>e</b>fining the
-            way you tr<b>a</b>vel, with se<b>a</b>mless
-            b<b>o</b><b>o</b>kings and unf<b>o</b>rgettable j<b>o</b>urneys" containerClass="mt-5 !text-black text-center"/>
 
 
-                <div className="about-subtext">
+                <AnimatedTitle title="R<b>e</b>d<b>e</b>fining the way you tr<b>a</b>vel, with se<b>a</b>mless b<b>o</b><b>o</b>kings and unf<b>o</b>rgettable j<b>o</b>urneys" containerClass="mt-5 !text-black text-center"/>
+
+
+                <div className="about-subtext ">
                     <p>The journey of journeys begins here with GoBus</p>
                     <p>Connecting travelers from countless cities and destinations, GoBus unites every road and every mile</p>
 

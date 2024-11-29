@@ -83,7 +83,7 @@ const Home = () => {
     const getVideoSrc = (index) => `videos/Home-${index}.mp4`;
     return (
         // dvh = dynamic viewport-percentage
-        <div className=" relative h-dvh w-screen overflow-x-hidden">
+        <div id="home" className=" relative h-dvh w-screen overflow-x-hidden">
             {isLoading && (
                 <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violete-50">
                     <div className="three-body">
