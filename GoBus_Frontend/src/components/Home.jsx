@@ -4,6 +4,8 @@ import gsap from "gsap";
 import Button from "./Button.jsx";
 import { ScrollTrigger } from "gsap/all";
 import { TiLocationArrow } from "react-icons/ti";
+import To_destination from "./To_destination.jsx";
+import From_Source from "./From_Source.jsx";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -151,6 +153,22 @@ const Home = () => {
               India's No. 1 Online Bus Ticket Booking Site
             </p>
             {/*<input type="text"/>*/}
+
+            {/**/}
+
+            <From_Source />
+
+            {/**/}
+
+            {/*<div className=" h-12 ml-96" id="Enterchange">*/}
+            {/*  <img src="" alt="" className="h-12" />*/}
+            {/*</div>*/}
+
+            {/**/}
+
+            <To_destination />
+
+            {/**/}
 
             <Button
               id="watch-trailer"
