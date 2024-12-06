@@ -501,6 +501,10 @@ body {
     transform: translateX(200%);
 }
 
-
+.date-input::-webkit-calendar-picker-indicator {
+    /*opacity: 0; !* Hides the calendar icon in WebKit browsers *!*/
+    width: 300px;
+    margin-left: -300px;
+}
 
 

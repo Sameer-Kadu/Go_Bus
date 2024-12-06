@@ -160,14 +160,32 @@ const Home = () => {
 
             {/**/}
 
-            {/*<div className=" h-12 ml-96" id="Enterchange">*/}
-            {/*  <img src="" alt="" className="h-12" />*/}
-            {/*</div>*/}
+            <div className=" h-12 absolute pl-80 " id="Enterchange">
+              <img
+                src="public/img/Stop_exchange.svg "
+                alt=""
+                className="h-12 -mt-4 "
+              />
+            </div>
 
             {/**/}
 
             <To_destination />
 
+            {/**/}
+            <div className=" py-2 mb-3 flex items-center h-full gap-3 group relative pr-12">
+              <img
+                src="public/img/Booking_date.svg"
+                alt=""
+                className="h-10 w-10 "
+              />
+              <input
+                className="pl-[50px] absolute appearance-none bg-transparent text-white text-lg outline-none cursor-pointer date-input border-none"
+                type="date"
+                placeholder="Select a date"
+              />
+              {/*<p className="text-gray-400">Date</p>*/}
+            </div>
             {/**/}
 
             <Button
