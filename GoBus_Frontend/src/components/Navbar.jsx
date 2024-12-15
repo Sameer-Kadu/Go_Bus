@@ -57,9 +57,9 @@ const Navbar = () => {
             <div className="hidden md:block">
               {navItems.map((item) =>
                 item.toLowerCase() === "login/sign up" ? (
-                  <a key={item} href="/auth" className="nav-hover-btn">
+                  <Link key={item} to="/auth" className="nav-hover-btn">
                     {item}
-                  </a>
+                  </Link>
                 ) : (
                   <a
                     key={item}
