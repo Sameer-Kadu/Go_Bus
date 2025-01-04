@@ -8,7 +8,7 @@ const Date = () => {
         <div className="flex items-center rounded-md outline outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-white">
           <div className="shrink-0 select-none text-base text-gray-500 sm:text-sm/6">
             <img
-              src="public/img/Booking_date.svg"
+              src="/img/Booking_date.svg"
               alt=""
               className="w-10 h-10 "
             />

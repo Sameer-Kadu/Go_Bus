@@ -1,4 +1,3 @@
-// import "./style.css";
 
 import { useState } from "react";
 
@@ -32,7 +31,7 @@ const Authentication = () => {
             <input type="email" placeholder="Enter your email address" />
             <input type="password" placeholder="Enter your password" />
             <a href="#">Forget Your Password?</a>
-            <button>Sign In</button>
+            <button className="text-black">Sign In</button>
           </form>
         </div>
         <div className="toggle-container all">

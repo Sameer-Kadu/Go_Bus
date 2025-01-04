@@ -162,7 +162,7 @@ const Home = () => {
 
             <div className=" h-12 absolute pl-80 " id="Enterchange">
               <img
-                src="public/img/Stop_exchange.svg "
+                src="/img/Stop_exchange.svg "
                 alt=""
                 className="h-12 -mt-4 "
               />
@@ -175,7 +175,7 @@ const Home = () => {
             {/**/}
             <div className=" py-2 mb-3 flex items-center h-full gap-3 group relative pr-12">
               <img
-                src="public/img/Booking_date.svg"
+                src="/img/Booking_date.svg"
                 alt=""
                 className="h-10 w-10 "
               />
