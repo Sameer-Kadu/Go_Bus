@@ -289,8 +289,8 @@ body {
 }
 
 .bodydiv{
-    background-color: #c9d6ff;
-    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    background-color: yellow;
+    background: #fde047;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -339,8 +339,8 @@ body {
 }
 
 .container button{
-    background-color: #afa44c;
-    color: #fff;
+    background-color: #fde047;
+    color: black;
     font-size: 12px;
     padding: 10px 45px;
     border: 1px solid transparent;
@@ -354,7 +354,7 @@ body {
 
 .container button.hid{
     background-color: transparent;
-    border-color: #fff;
+    border-color: black;
 }
 
 .container form{
@@ -453,9 +453,9 @@ body {
 }
 
 .toggle{
-    background-color: #fff;
+    background-color: #fde047;
     height: 100%;
-    background: linear-gradient(to right, #e7db7a, #4e4604);
+    background: linear-gradient(to right, #fde047, #fde047);
     color: #fff;
     position: relative;
     left: -100%;

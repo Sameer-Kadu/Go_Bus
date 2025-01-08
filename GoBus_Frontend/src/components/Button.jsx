@@ -1,3 +1,4 @@
+import propTypes from 'prop-types';
 const Button = ({ title, id, rightIcon, leftIcon, containerClass }) => {
   return (
     <button
@@ -12,5 +13,12 @@ const Button = ({ title, id, rightIcon, leftIcon, containerClass }) => {
       {rightIcon}
     </button>
   );
+};
+Button.propTypes = {
+  title: propTypes.string.isRequired,
+  id: propTypes.string.isRequired,
+  rightIcon: propTypes.element,
+  leftIcon: propTypes.element,
+  containerClass: propTypes.string,
 };
 export default Button;

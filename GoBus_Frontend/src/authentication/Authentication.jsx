@@ -1,13 +1,28 @@
 
 import { useState } from "react";
+import Button from "../components/Button";
+import { TiLocationArrow } from "react-icons/ti";
+import Squares from "./Backgroung";
 
 const Authentication = () => {
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <div className="bodydiv all">
+    <div className="bodydiv all text-black">
+     
+    <div className="h-screen w-screen absolute">
+    <Squares 
+      speed={0.5} 
+      squareSize={40}
+      direction='diagonal' // up, down, left, right, diagonal
+      borderColor='gray'
+      hoverFillColor='yellow-200'
+      className="h-screen w-screen"
+    />
+    </div>
+    <div className="">
       <div
-        className={`container all  ${isActive ? "active" : ""}`}
+        className={` z-0 container all  ${isActive ? "active" : ""}`}
         id="container"
       >
         <div className="form-container sign-up all">
@@ -19,7 +34,12 @@ const Authentication = () => {
             <input type="email" placeholder="Enter your email" />
             <input type="password" placeholder="Enter your password" />
             <input type="password" placeholder="Re-enter your password" />
-            <button className="all">Sign Up</button>
+            <Button
+              id="watch-trailer"
+              title="Sign Up"
+              leftIcon={<TiLocationArrow />}
+              containerClass="!bg-yellow-300 flex-center gap-1"
+            />
           </form>
         </div>
         <div className="form-container sign-in all">
@@ -31,24 +51,30 @@ const Authentication = () => {
             <input type="email" placeholder="Enter your email address" />
             <input type="password" placeholder="Enter your password" />
             <a href="#">Forget Your Password?</a>
-            <button className="text-black">Sign In</button>
+            <Button
+              id="watch-trailer"
+              title="Sign in"
+              leftIcon={<TiLocationArrow />}
+              containerClass="!bg-yellow-300 flex-center gap-1"
+            />
           </form>
         </div>
         <div className="toggle-container all">
           <div className="toggle all">
-            <div className="toggle-panel toggle-left all">
+            <div className="toggle-panel toggle-left all text-black">
               <h1 className="all heading">Welcome Back!</h1>
               <p>Enter your personal details to use all of site features</p>
+              
               <button
                 className="hid all"
                 id="login"
                 onClick={() => setIsActive(false)}
-              >
+              ><TiLocationArrow className="inline-flex mr-1"/>
                 Sign In
               </button>
             </div>
-            <div className="toggle-panel toggle-right all">
-              <h1 className="all heading">Hello, Friend!</h1>
+            <div className="toggle-panel toggle-right all text-black">
+              <h1 className="all heading text-black">Hello, Friend!</h1>
               <p>
                 Register with your personal details to use all of site features
               </p>
@@ -56,12 +82,13 @@ const Authentication = () => {
                 className="hid all"
                 id="register"
                 onClick={() => setIsActive(true)}
-              >
+              ><TiLocationArrow className="inline-flex mr-1"/>
                 Sign Up
               </button>
             </div>
           </div>
         </div>
+      </div>.
       </div>
     </div>
   );

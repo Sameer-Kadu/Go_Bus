@@ -113,7 +113,7 @@ const Home = () => {
                 muted
                 id="current-video"
                 className="size-64 origin-center scale-150 object-cover object-center"
-                onLoadData={handleVideoLoad}
+                onLoadedData={handleVideoLoad}
               />
             </div>
           </div>
@@ -135,7 +135,7 @@ const Home = () => {
             loop
             muted
             className="absolute left-0 top-0 size-full object-cover object-center"
-            onLoadData={handleVideoLoad}
+            onLoadedData={handleVideoLoad}
           />
         </div>
 
@@ -150,7 +150,8 @@ const Home = () => {
             </h1>
 
             <p className="mb-5 max-w-64 font-robert-regular text-yellow-200">
-              India's No. 1 Online Bus Ticket Booking Site
+              {/* &apos for ' */}
+              India&apos;s No. 1 Online Bus Ticket Booking Site
             </p>
             {/*<input type="text"/>*/}
 
