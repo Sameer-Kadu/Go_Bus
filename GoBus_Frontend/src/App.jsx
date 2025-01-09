@@ -3,6 +3,9 @@ import About from "./components/About.jsx";
 import Navbar from "./components/Navbar.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Authentication from "./authentication/Authentication.jsx";
+import Features from "./components/Features.jsx";
+import Contact from "./components/Contact.jsx";
+import Footer from "./components/Footer.jsx";
 
 const App = () => {
   return (
@@ -17,13 +20,17 @@ const App = () => {
                 <Navbar />
                 <Home />
                 <About />
+                <Features />
+                <Contact />
+                <Footer />
               </>
             }
           />
 
           <Route path="/auth" element={<Authentication />} />
-          {/*<Route path="/signup" element={<SignUp />} />*/}
+
         </Routes>
+        
       </main>
     </Router>
   );

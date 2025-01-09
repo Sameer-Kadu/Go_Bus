@@ -9,7 +9,6 @@ const navItems = [
   "Home",
   "About",
   "Contact",
-  "Help",
   "Language",
   "Login/Sign up",
 ];
