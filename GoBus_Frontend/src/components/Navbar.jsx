@@ -1,19 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import Button from "./Button.jsx";
-import { TiLocationArrow } from "react-icons/ti";
 import { useWindowScroll } from "react-use";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import gsap from "gsap";
+import { HashLink } from "react-router-hash-link";
+import propTypes from "prop-types";
 
-const navItems = [
-  "Home",
-  "About",
-  "Contact",
-  "Language",
-  "Login/Sign up",
-];
+const navItems = ["Home", "About", "Contact", "Language", "Login/Sign up"];
 
-const Navbar = () => {
+const Navbar = ({ classes }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isNavVisible, setIsNavVisible] = useState(true);
   const { y: currentScrollY } = useWindowScroll();
@@ -42,6 +38,29 @@ const Navbar = () => {
     });
   }, [isNavVisible]);
 
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleNavItemClick = (item) => {
+    const sectionId = item.toLowerCase();
+    
+    if (location.pathname !== "/") {
+      // If we're not on the home page, navigate to home page with hash
+      navigate("/");
+      // Wait for navigation to complete before scrolling
+      setTimeout(() => {
+        scrollToSection(sectionId);
+      }, 100);
+    } else {
+      // If we're already on the home page, just scroll to the section
+      scrollToSection(sectionId);
+    }
+  };
+
   return (
     <div
       ref={navContainerRef}
@@ -50,24 +69,32 @@ const Navbar = () => {
       <header className="absolute top-1/2 w-full -translate-y-1/2">
         <nav className="flex size-full items-center justify-between p-4">
           <div className="flex items-center gap-7">
-            <img src="/img/GoBuslogo.png" alt="logo" className="w-16" />
+            <img src="/img/GoBuslogo.png" alt="logo" className="w-16" onClick={()=>{navigate("/")}}/>
           </div>
-          <div className="flex h-full items-center ">
+          <div className="flex h-full items-center">
             <div className="hidden md:block">
               {navItems.map((item) =>
                 item.toLowerCase() === "login/sign up" ? (
-                  <Link key={item} to="/auth" className="nav-hover-btn">
+                  <Link
+                    key={item}
+                    to="/auth"
+                    className={`nav-hover-btn ${classes}`}
+                  >
                     {item}
                   </Link>
                 ) : (
-                  <a
+                  <HashLink
                     key={item}
-                    href={`#${item.toLowerCase()}`}
-                    className="nav-hover-btn"
+                    // to={`/#${item.toLowerCase()}`}
+                    className={`nav-hover-btn ${classes}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavItemClick(item);
+                    }}
                   >
                     {item}
-                  </a>
-                ),
+                  </HashLink>
+                )
               )}
             </div>
           </div>
@@ -76,4 +103,9 @@ const Navbar = () => {
     </div>
   );
 };
+
+Navbar.propTypes = {
+  classes: propTypes.string,
+};
+
 export default Navbar;

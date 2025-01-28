@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/all";
 import { TiLocationArrow } from "react-icons/ti";
 import To_destination from "./To_destination.jsx";
 import From_Source from "./From_Source.jsx";
+import { Link } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -57,7 +58,7 @@ const Home = () => {
         });
       }
     },
-    { dependencies: [currentIndex], revertOnUpdate: true },
+    { dependencies: [currentIndex], revertOnUpdate: true }
   );
 
   useGSAP(() => {
@@ -129,7 +130,7 @@ const Home = () => {
           />
           <video
             src={getVideoSrc(
-              currentIndex === totalVideos - 1 ? 1 : currentIndex,
+              currentIndex === totalVideos - 1 ? 1 : currentIndex
             )}
             autoPlay
             loop
@@ -175,11 +176,7 @@ const Home = () => {
 
             {/**/}
             <div className=" py-2 mb-3 flex items-center h-full gap-3 group relative pr-12">
-              <img
-                src="/img/Booking_date.svg"
-                alt=""
-                className="h-10 w-10 "
-              />
+              <img src="/img/Booking_date.svg" alt="" className="h-10 w-10 " />
               <input
                 className="pl-[50px] absolute appearance-none bg-transparent text-white text-lg outline-none cursor-pointer date-input border-none"
                 type="date"
@@ -188,13 +185,14 @@ const Home = () => {
               {/*<p className="text-gray-400">Date</p>*/}
             </div>
             {/**/}
-
-            <Button
-              id="watch-trailer"
-              title="Search Bus"
-              leftIcon={<TiLocationArrow />}
-              containerClass="!bg-yellow-300 flex-center gap-1"
-            />
+            <Link to="/buses">
+              <Button
+                id="watch-trailer"
+                title="Search Bus"
+                leftIcon={<TiLocationArrow />}
+                containerClass="!bg-yellow-300 flex-center gap-1"
+              />
+            </Link>
           </div>
         </div>
       </div>

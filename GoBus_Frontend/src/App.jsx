@@ -6,6 +6,7 @@ import Authentication from "./authentication/Authentication.jsx";
 import Features from "./components/Features.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
+import Buses from "./Buses/Buses.jsx";
 
 const App = () => {
   return (
@@ -28,7 +29,7 @@ const App = () => {
           />
 
           <Route path="/auth" element={<Authentication />} />
-
+          <Route path="/buses" element={<Buses />} />
         </Routes>
         
       </main>
