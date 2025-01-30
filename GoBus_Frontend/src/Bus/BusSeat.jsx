@@ -2,6 +2,7 @@ import { useState } from "react";
 import { MdAirlineSeatReclineExtra } from "react-icons/md";
 import Button from "../components/Button";
 import { TiLocationArrow } from "react-icons/ti";
+import { Link } from "react-router-dom";
 const BusSeatBooking = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
 
@@ -11,13 +12,13 @@ const BusSeatBooking = () => {
       ["1AL", "1BL", "1CL", "1DL", "1EL", "1FL"], // null = spacer between sides
       ["2AL", "2BL", "2CL", "2DL", "2EL", "2FL"],
       [null, null, null, null, null, null],
-      ["3AL", "3BL", "3Cl", "3Dl", "3El", "3FR"],
+      ["3AL", "3BL", "3CL", "3DL", "3EL", "3FL"],
     ],
     upper: [
-      ["4AL", "4BL", "4CL", "4DL", "4EL", "4FL"], // null = spacer between sides
-      ["5AL", "5BL", "5CL", "5DL", "5EL", "5FL"],
+      ["4AU", "4BU", "4CU", "4DU", "4EU", "4FU"], // null = spacer between sides
+      ["5AU", "5BU", "5CU", "5DU", "5EU", "5FU"],
       [null, null, null, null, null, null],
-      ["6AL", "6BL", "6CR", "6DR", "6ER", "6FR"],
+      ["6AU", "6BU", "6CU", "6DU", "6EU", "6FU"],
     ],
   };
 
@@ -37,7 +38,7 @@ const BusSeatBooking = () => {
   };
 
   return (
-    <div className="flex justify-between items-center pl-[200px] pr-[200px] p-2">
+    <div className="flex justify-between items-center p-2 pl-40 pr-40">
       
 
       {/* Lower Deck */}
@@ -140,19 +141,46 @@ const BusSeatBooking = () => {
           ))}
         </div>
       </div>
+      <div>
+      <div className="flex flex-col gap-2 p-4 bg-gray-100 rounded-lg shadow-md">
+      <h4 className="font-semibold text-gray-700">SEAT LEGEND</h4>
+      <div className="flex flex-wrap gap-4">
+        <div className="flex items-center gap-2">
+          <MdAirlineSeatReclineExtra className="text-black-500 text-xl" />
+          <span className="text-gray-600 text-sm">Available</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <MdAirlineSeatReclineExtra className="text-gray-400 text-xl opacity-50" />
+          <span className="text-gray-600 text-sm">Unavailable</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <MdAirlineSeatReclineExtra className="text-pink-500 text-xl" />
+          <span className="text-gray-600 text-sm">Female</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <MdAirlineSeatReclineExtra className="text-blue-500 text-xl" />
+          <span className="text-gray-600 text-sm">Male</span>
+        </div>
+      </div>
+    </div>
 
       {/* Selected Seats and Payment Button */}
       <div className="mt-8 p-4 bg-white rounded-lg shadow-md">
         <h3 className="text-lg font-semibold mb-4 text-center">
           Selected Seats: {selectedSeats.join(", ") || "None"}
         </h3>
+        <div className="flex justify-center">
+          <Link to="/selectSeat">
         <Button
           id="watch-trailer"
-          title="Proceed to Payment"
+          title="Select Seats"
           leftIcon={<TiLocationArrow />}
             change={handleProceedToPayment}
           containerClass="!bg-yellow-300 flex-center gap-1"
         />
+        </Link>
+        </div>
+      </div>
       </div>
     </div>
   );
