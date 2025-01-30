@@ -49,14 +49,14 @@ const Navbar = ({ classes }) => {
     const sectionId = item.toLowerCase();
     
     if (location.pathname !== "/") {
-      // If we're not on the home page, navigate to home page with hash
+      
       navigate("/");
-      // Wait for navigation to complete before scrolling
+      
       setTimeout(() => {
         scrollToSection(sectionId);
       }, 100);
     } else {
-      // If we're already on the home page, just scroll to the section
+      
       scrollToSection(sectionId);
     }
   };
