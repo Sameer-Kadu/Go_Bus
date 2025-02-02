@@ -9,6 +9,8 @@ import Footer from "./components/Footer.jsx";
 import Buses from "./Buses/Buses.jsx";
 import PassengerInformation from "./Passenger/PassengerInformation.jsx";
 import TicketSummary from "./Payment/TicketSummary.jsx";
+import OperatorRegistration from './Operator/OperatorRegistration';
+import OperatorHomePage from "./Operator/OperatorHomePage.jsx";
 
 const App = () => {
   return (
@@ -34,6 +36,8 @@ const App = () => {
           <Route path="/buses" element={<Buses />} />
           <Route path="/selectSeat" element={<PassengerInformation/>} />
           <Route path="/payment" element={<TicketSummary/>} />
+          <Route path="/registration" element={<OperatorRegistration/>} />
+          <Route path="/home" element={<OperatorHomePage/>} />
         </Routes>
         
       </main>

@@ -11,17 +11,17 @@ const OperationOrTraveler = ({onClose})=>{
           <h1 className="text-black heading">Register as</h1>
           <div className="justify-center items-center ml-3">
           <Button
-           
+           id="Operator"
             title="Operator"
-            change={onClose}
+            change={()=>onClose("Operator")}
             leftIcon={<TiLocationArrow />}
             containerClass="!bg-yellow-300 flex-center gap-1 "
           />
           
           <Button
-            
+            id="Operator"
             title="Traveler"
-            change={onClose}
+            change={()=>onClose("Traveler")}
             leftIcon={<TiLocationArrow />}
             containerClass="!bg-yellow-300 flex-center gap-1"
           />

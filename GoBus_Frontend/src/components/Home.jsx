@@ -187,7 +187,7 @@ const Home = () => {
             {/**/}
             <Link to="/buses">
               <Button
-                id="watch-trailer"
+                id="Search_Bus"
                 title="Search Bus"
                 leftIcon={<TiLocationArrow />}
                 containerClass="!bg-yellow-300 flex-center gap-1"
