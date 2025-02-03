@@ -11,6 +11,7 @@ import PassengerInformation from "./Passenger/PassengerInformation.jsx";
 import TicketSummary from "./Payment/TicketSummary.jsx";
 import OperatorRegistration from './Operator/OperatorRegistration';
 import OperatorHomePage from "./Operator/OperatorHomePage.jsx";
+import AdminDashboard from './Admin/adminHome';
 
 const App = () => {
   return (
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/payment" element={<TicketSummary/>} />
           <Route path="/registration" element={<OperatorRegistration/>} />
           <Route path="/home" element={<OperatorHomePage/>} />
+          <Route path="/adminHome" element={<AdminDashboard/>}/>
         </Routes>
         
       </main>
