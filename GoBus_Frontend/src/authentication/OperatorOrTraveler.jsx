@@ -13,15 +13,16 @@ const OperationOrTraveler = ({onClose})=>{
           <Button
            id="Operator"
             title="Operator"
-            change={()=>onClose("Operator")}
+            change={()=>onClose("ROLE_OPERATOR")}
             leftIcon={<TiLocationArrow />}
             containerClass="!bg-yellow-300 flex-center gap-1 "
           />
           
           <Button
             id="Operator"
+            // ROLE_ADMIN, ROLE_TRAVELER, ROLE_OPERATOR
             title="Traveler"
-            change={()=>onClose("Traveler")}
+            change={()=>onClose("ROLE_TRAVELER")}
             leftIcon={<TiLocationArrow />}
             containerClass="!bg-yellow-300 flex-center gap-1"
           />

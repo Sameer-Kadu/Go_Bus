@@ -3,9 +3,11 @@ import Button from "../components/Button";
 import { TiLocationArrow } from "react-icons/ti";
 import Squares from "./Backgroung";
 import OperationOrTraveler from "./OperatorOrTraveler";
-import { registerOperator, registerTraveler } from "../services/registration";
+import { loginUser, registerUser } from "../services/user";
+import { useNavigate } from "react-router-dom";
 
 const Authentication = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
@@ -20,8 +22,42 @@ const Authentication = () => {
     setShowModal(true);
   };
 
-  const handleSignUp = () => {
-    event.preventDefault()
+  const handleSignIn = async () =>{
+    event.preventDefault();
+    if (!email.trim()) {
+      alert("Please enter your email");
+      return;
+    }
+    if (!password) {
+      alert("Please enter your password");
+      return;
+    }
+    console.log(email+" , "+password)
+    const result = await loginUser(email, password)
+   console.log(result);
+   if(result["status"] == 201)
+   {
+    const data = result.data;
+    const token = data.jwt;
+    sessionStorage["token"] = token;
+    // ROLE_ADMIN, ROLE_TRAVELER, ROLE_OPERATOR
+    if(data.role == "ROLE_ADMIN")
+    {
+      navigate("/home");
+    }
+    if(data.role == "ROLE_TRAVELER")
+    {
+      navigate("/");
+    }
+    if(data.role == "ROLE_OPERATOR")
+    {
+      navigate("/registration");
+    }
+   }
+  }
+
+  const handleSignUp = async () => {
+    event.preventDefault();
     if (!name.trim()) {
       alert("Please enter your name");
       return;
@@ -47,12 +83,18 @@ const Authentication = () => {
       return;
     }
 
-    if (role === "Traveler") {
-      console.log("Traveler Registration:", { name, email, phone, password });
-      registerTraveler(name, email, phone, password);
-    } else {
-      console.log("Operator Registration:", { name, email, phone, password });
-      registerOperator(name, email, phone, password);
+    console.log("Traveler Registration:", {
+      name,
+      email,
+      phone,
+      password,
+      role,
+    });
+    const result = await registerUser(name, email, phone, password, role);
+    console.log("status result " + result.status);
+    if (result["status"] == 201) {
+      setIsActive(false);
+      setShowModal(false);
     }
   };
 
@@ -134,15 +176,16 @@ const Authentication = () => {
           <div className="form-container1 sign-in all">
             <form>
               <h1 className="heading">Sign In</h1>
-              <span>With phone</span>
+              {/* <span>With phone</span>
               <input type="text" placeholder="Enter your phone number" />
-              <span>or use your email password</span>
-              <input type="email" placeholder="Enter your email address" />
-              <input type="password" placeholder="Enter your password" />
+              <span>or use your email password</span> */}
+              <input type="email" placeholder="Enter your email address" onChange={(e) => setEmail(e.target.value)}/>
+              <input type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)}/>
               <a href="#">Forget Your Password?</a>
               <Button
                 id="Sign_in"
                 title="Sign in"
+                change={handleSignIn}
                 leftIcon={<TiLocationArrow />}
                 containerClass="!bg-yellow-300 flex-center gap-1"
               />
