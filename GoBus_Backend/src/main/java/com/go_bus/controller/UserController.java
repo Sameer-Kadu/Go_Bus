@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.go_bus.dto.AuthRequest;
 import com.go_bus.dto.AuthResp;
 import com.go_bus.dto.UserDTO;
+import com.go_bus.pojos.OperatorDetailsEntity;
+import com.go_bus.pojos.UserEntity;
 import com.go_bus.pojos.UserRole;
 import com.go_bus.security.JwtUtils;
+import com.go_bus.service.OperatorService;
 import com.go_bus.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,12 +29,15 @@ import jakarta.validation.Valid;
 //@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/User")
-@CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
 	@Autowired
 	private UserService userService;
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private OperatorService operatorService;
+	
 	@Autowired
 	private JwtUtils jwtUtils;
 
@@ -76,11 +82,21 @@ public class UserController {
 																			// exist)
 				.map(grantedAuthority -> UserRole.valueOf(grantedAuthority.getAuthority())) // Convert String to Enum
 				.orElse(UserRole.ROLE_TRAVELER);
-		
-		UserDTO userDTO = userService.getUser(dto.getEmail());
 
-		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(new AuthResp("Sucessful Auth !", jwtUtils.generateJwtToken(authToken), userRole, userDTO.getName(), userDTO.getEmail()));
+		UserDTO userDTO = userService.getUser(dto.getEmail());
+		System.out.println("-----------------------------------------------");
+		System.out.println("-----------------------------------------------");
+		System.out.println(userDTO);
+		System.out.println("-----------------------------------------------");
+		System.out.println("-----------------------------------------------");
+
+		UserEntity userEntity = userService.findByEmail(userDTO.getEmail());
+		
+		OperatorDetailsEntity operatorDetailsEntity = operatorService.findByUserEntity(userEntity);
+		
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(new AuthResp("Sucessful Auth !",
+				jwtUtils.generateJwtToken(authToken), userRole, userDTO.getName(), userDTO.getEmail(),operatorDetailsEntity));
 	}
 
 }

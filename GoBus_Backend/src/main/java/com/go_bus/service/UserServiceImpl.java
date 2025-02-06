@@ -35,9 +35,32 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDTO getUser(String email) {
-	Optional<UserEntity> userEntity = userRepository.findByEmail(email);
-	UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
-		return userDTO;
+	    System.out.println("Searching for user with email: " + email);
+	    Optional<UserEntity> userEntity = userRepository.findByEmail(email);
+
+	    if (userEntity.isEmpty()) {
+	        System.out.println("User not found in database.");
+	        throw new ApiException("User not found with email: " + email);
+	    }
+ 
+	    System.out.println("User found: " + userEntity.get());
+	    return modelMapper.map(userEntity.get(), UserDTO.class);
 	}
+
+	@Override
+	public UserEntity findByEmail(String userEmail) {
+		  System.out.println("Searching for user with email: " + userEmail);
+		    Optional<UserEntity> userEntity = userRepository.findByEmail(userEmail);
+
+		    if (userEntity.isEmpty()) {
+		        System.out.println("User not found in database.");
+		        throw new ApiException("User not found with email: " + userEmail);
+		    }
+	 
+		    System.out.println("User found: " + userEntity.get());
+		    return modelMapper.map(userEntity.get(), UserEntity.class);
+	}
+
+	
 
 }

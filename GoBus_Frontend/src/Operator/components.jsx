@@ -189,6 +189,9 @@ const Sidebar = ({ activeTab, onTabChange }) => {
 
   return (
     <div className="w-64 bg-black text-white p-6">
+      <div className='w-20 mb-2'>
+        <img src="./img/GoBuslogo.png" alt="" />
+      </div>
       <div className="mb-8">
         <h1 className="text-xl font-bold">GoBus Operator</h1>
       </div>

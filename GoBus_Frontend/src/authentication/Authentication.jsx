@@ -22,7 +22,7 @@ const Authentication = () => {
     setShowModal(true);
   };
 
-  const handleSignIn = async () =>{
+  const handleSignIn = async () => {
     event.preventDefault();
     if (!email.trim()) {
       alert("Please enter your email");
@@ -32,29 +32,39 @@ const Authentication = () => {
       alert("Please enter your password");
       return;
     }
-    console.log(email+" , "+password)
-    const result = await loginUser(email, password)
-   console.log(result);
-   if(result["status"] == 201)
-   {
-    const data = result.data;
-    const token = data.jwt;
-    sessionStorage["token"] = token;
-    // ROLE_ADMIN, ROLE_TRAVELER, ROLE_OPERATOR
-    if(data.role == "ROLE_ADMIN")
-    {
-      navigate("/home");
+    console.log(email + " , " + password);
+    const result = await loginUser(email, password);
+    console.log(result);
+    if (result["status"] == 201) {
+      const data = result.data;
+      const token = data.jwt;
+      const name = data.name;
+      console.log("your name" + name);
+      sessionStorage["token"] = token;
+      sessionStorage["name"] = name;
+      // ROLE_ADMIN, ROLE_TRAVELER, ROLE_OPERATOR
+      if (data.role == "ROLE_ADMIN") {
+        navigate("/home");
+      }
+      if (data.role == "ROLE_TRAVELER") {
+        navigate("/");
+      }
+      if (data.role == "ROLE_OPERATOR") {
+
+        console.log("appeoved"+data.operatorDetailsEntity.approved)
+        console.log(data.operatorDetailsEntity);
+        if (data.operatorDetailsEntity != null) {
+          if (data.operatorDetailsEntity.approved) {
+            navigate("/home");
+          } else {
+            alert("Your account is not approved");
+          }
+        } else {
+          navigate("/registration");
+        }
+      }
     }
-    if(data.role == "ROLE_TRAVELER")
-    {
-      navigate("/");
-    }
-    if(data.role == "ROLE_OPERATOR")
-    {
-      navigate("/registration");
-    }
-   }
-  }
+  };
 
   const handleSignUp = async () => {
     event.preventDefault();
@@ -179,8 +189,16 @@ const Authentication = () => {
               {/* <span>With phone</span>
               <input type="text" placeholder="Enter your phone number" />
               <span>or use your email password</span> */}
-              <input type="email" placeholder="Enter your email address" onChange={(e) => setEmail(e.target.value)}/>
-              <input type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)}/>
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <input
+                type="password"
+                placeholder="Enter your password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
               <a href="#">Forget Your Password?</a>
               <Button
                 id="Sign_in"

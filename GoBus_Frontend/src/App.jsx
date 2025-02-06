@@ -14,6 +14,7 @@ import OperatorHomePage from "./Operator/OperatorHomePage.jsx";
 import AdminDashboard from './Admin/adminHome';
 
 const App = () => {
+  const name = sessionStorage.getItem("name");
   return (
     <Router navigator="" location="">
       <main className="relative min-h-screen w-screen overflow-x-hidden">
@@ -23,7 +24,8 @@ const App = () => {
             path="/"
             element={
               <>
-                <Navbar />
+             
+                <Navbar name={name}/>
                 <Home />
                 <About />
                 <Features />

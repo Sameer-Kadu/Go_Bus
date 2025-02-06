@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Bell, Settings } from "lucide-react";
 import {
   AddBus,
@@ -8,46 +8,44 @@ import {
   Sidebar,
   EditBus,
 } from "./components";
+import { getBuses } from "../services/operator";
 
 const OperatorHomePage = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [edit, setEdit] = useState(null);
-  const [buses, setBuses] = useState([
-    {
-      id: 1,
-      name: "Express A",
-      route: "NYC - LA",
-      status: "Active",
-      capacity: 45,
-    },
-    {
-      id: 2,
-      name: "Swift B",
-      route: "Chicago - Dallas",
-      status: "Inactive",
-      capacity: 50,
-    },
-  ]);
-  const [bookings, setBookings] = useState([
-    {
-      id: 1,
-      busName: "Express A",
-      passenger: "John Doe",
-      from: "NYC",
-      to: "LA",
-      date: "2025-02-15",
-      status: "Confirmed",
-    },
-    {
-      id: 2,
-      busName: "Express A",
-      passenger: "Jane Smith",
-      from: "NYC",
-      to: "LA",
-      date: "2025-02-15",
-      status: "Pending",
-    },
-  ]);
+  const [buses, setBuses] = useState([]);
+  const [bookings, setBookings] = useState([]);
+
+  const onLoadItems = async () => {
+    try {
+      const result = await getBuses();
+      console.log("result", result);
+      
+      if (result && result.status === 'success' && Array.isArray(result.data)) {
+        setBuses(result.data);
+      } else {
+        // Fallback: set an empty array to avoid undefined
+        setBuses([]);
+        alert(result && result.error ? result.error : "No data returned");
+      }
+    } catch (error) {
+      console.error("Error fetching buses:", error);
+      setBuses([]);
+    }
+  }
+
+  useEffect(() => {
+    // the function (1st param) will be called as soon as
+    // the component gets mounted (loaded)
+    console.log('component is mounted...')
+    onLoadItems()
+
+    return () => {
+      // this function will get called when the component
+      // gets unmounted (unloaded)
+      console.log('component is unmounted...')
+    }
+  }, [])
 
   const handleAddBus = (newBus) => {
     setBuses([...buses, { ...newBus, id: buses.length + 1 }]);

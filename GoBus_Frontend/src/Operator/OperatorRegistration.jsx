@@ -1,58 +1,46 @@
 import { useState } from 'react';
+import { registerOperator } from '../services/operator';
 
 const OperatorRegistration = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    // Personal Information
-    AgencyName: "",
-    zipCode: "",
-    state: "",
-    city: "",
-    phoneNumber: "",
-    OwnerName: "",
-    country: "",
-    District: "",
-
-    // Bank Details
-    BankName: "",
-    AccountNumber: "",
-    IFSCCode: "",
-    AccountType: "",
-    BenificharyName: "",
-    PAN: "",
-
-    // Gst Details
-    GST: ""
+    agencyName: "", // Agency name
+    zipCode: "", // Zip code
+    state: "", // State
+    city: "", // City
+    phoneNumber: "", // Phone number
+    ownerName: "", // Owner name
+    country: "", // Country
+    district: "", // District
+    bankName: "", // Bank name
+    accountNumber: "", // Account number
+    ifscCode: "", // IFSC code
+    accountType: "", // Account type ('Saving' or 'Current')
+    beneficiaryName: "", // Beneficiary name
+    pan: "", // PAN
+    gst: "" // GST
   });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
 
   const handleNext = () => {
     let isValid = true;
-  
+
     if (step === 1) {
-      const { AgencyName, OwnerName, country, state, District, city, zipCode, phoneNumber } = formData;
-      if (!AgencyName || !OwnerName || !country || !state || !District || !city || !zipCode || !phoneNumber) {
+      const { agencyName, ownerName, country, state, district, city, zipCode, phoneNumber } = formData;
+      if (!agencyName || !ownerName || !country || !state || !district || !city || !zipCode || !phoneNumber) {
         isValid = false;
       }
     } else if (step === 2) {
-      const { BankName, AccountNumber, IFSCCode, AccountType, BenificharyName, PAN } = formData;
-      if (!BankName || !AccountNumber || !IFSCCode || !AccountType || !BenificharyName || !PAN) {
+      const { bankName, accountNumber, ifscCode, accountType, beneficiaryName, pan } = formData;
+      if (!bankName || !accountNumber || !ifscCode || !accountType || !beneficiaryName || !pan) {
         isValid = false;
       }
     } else if (step === 3) {
-      const { GST } = formData;
-      if (!GST) {
+      const { gst } = formData;
+      if (!gst) {
         isValid = false;
       }
     }
-  
+
     if (isValid) {
       setStep(prev => Math.min(prev + 1, 3));
     } else {
@@ -64,19 +52,23 @@ const OperatorRegistration = () => {
     setStep(prev => Math.max(prev - 1, 1));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
+    const result = await registerOperator(formData);
+    if (result["status"] === 201) {
+      console.log("register successful");
+    }
   };
 
   return (
-    <div className="min-h-screen flex ">
+    <div className="min-h-screen flex">
       {/* Left sidebar with progress indicator */}
       <div className="w-80 bg-black text-white p-8 flex items-center justify-center min-h-screen">
         <div className="relative">
           {/* Vertical line */}
           <div className="absolute left-2 top-8 bottom-0 w-0.5 bg-gray-600" />
-          
+
           {/* Steps */}
           <div className="space-y-16">
             <div className="relative flex items-center">
@@ -86,7 +78,7 @@ const OperatorRegistration = () => {
                 <div className="font-medium">Personal Information</div>
               </div>
             </div>
-            
+
             <div className="relative flex items-center">
               <div className={`w-4 h-4 rounded-full ${step >= 2 ? 'bg-white' : 'bg-gray-600'} relative z-10`} />
               <div className="ml-6">
@@ -94,7 +86,7 @@ const OperatorRegistration = () => {
                 <div className="font-medium">Bank Details</div>
               </div>
             </div>
-            
+
             <div className="relative flex items-center">
               <div className={`w-4 h-4 rounded-full ${step >= 3 ? 'bg-white' : 'bg-gray-600'} relative z-10`} />
               <div className="ml-6">
@@ -108,12 +100,11 @@ const OperatorRegistration = () => {
 
       {/* Main content */}
       <div className="flex-1 p-8 bg-white flex items-center justify-center min-h-screen">
-      <div className="absolute  top-4 right-4  w-20">
+        <div className="absolute top-4 right-4 w-20">
           <img src="./img/GoBuslogo.png" alt="" />
-          
         </div>
         <div className="absolute top-20 left-80">
-        <hr className="w-screen border-t border-gray-400"/>
+          <hr className="w-screen border-t border-gray-400" />
         </div>
         <div className="max-w-2xl mx-auto">
           <div className="flex justify-between items-center mb-8">
@@ -122,7 +113,6 @@ const OperatorRegistration = () => {
               {step === 2 && 'Bank Details'}
               {step === 3 && 'GST Details'}
             </h2>
-            
           </div>
 
           <form onSubmit={handleSubmit}>
@@ -132,25 +122,25 @@ const OperatorRegistration = () => {
                   <input
                     type="text"
                     placeholder="Agency Name *"
-                    name="AgencyName"
-                    value={formData.AgencyName}
-                    onChange={handleInputChange}
+                    name="agencyName"
+                    value={formData.agencyName}
+                    onChange={(e) => setFormData({ ...formData, agencyName: e.target.value })}
                     className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                     required
                   />
                   <input
                     type="text"
                     placeholder="Owner Name *"
-                    name="OwnerName"
-                    value={formData.OwnerName}
-                    onChange={handleInputChange}
+                    name="ownerName"
+                    value={formData.ownerName}
+                    onChange={(e) => setFormData({ ...formData, ownerName: e.target.value })}
                     className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                     required
                   />
                   <select
                     name="country"
                     value={formData.country}
-                    onChange={handleInputChange}
+                    onChange={(e) => setFormData({ ...formData, country: e.target.value })}
                     className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                     required
                   >
@@ -163,16 +153,16 @@ const OperatorRegistration = () => {
                       placeholder="State *"
                       name="state"
                       value={formData.state}
-                      onChange={handleInputChange}
+                      onChange={(e) => setFormData({ ...formData, state: e.target.value })}
                       className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                       required
                     />
                     <input
                       type="text"
                       placeholder="District *"
-                      name="District"
-                      value={formData.District}
-                      onChange={handleInputChange}
+                      name="district"
+                      value={formData.district}
+                      onChange={(e) => setFormData({ ...formData, district: e.target.value })}
                       className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                       required
                     />
@@ -183,7 +173,7 @@ const OperatorRegistration = () => {
                       placeholder="City *"
                       name="city"
                       value={formData.city}
-                      onChange={handleInputChange}
+                      onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                       className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                       required
                     />
@@ -192,7 +182,7 @@ const OperatorRegistration = () => {
                       placeholder="ZIP Code *"
                       name="zipCode"
                       value={formData.zipCode}
-                      onChange={handleInputChange}
+                      onChange={(e) => setFormData({ ...formData, zipCode: e.target.value })}
                       className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                       required
                     />
@@ -202,7 +192,7 @@ const OperatorRegistration = () => {
                     placeholder="Phone Number *"
                     name="phoneNumber"
                     value={formData.phoneNumber}
-                    onChange={handleInputChange}
+                    onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
                     className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                     required
                   />
@@ -214,34 +204,34 @@ const OperatorRegistration = () => {
                   <input
                     type="text"
                     placeholder="Bank Name *"
-                    name="BankName"
-                    value={formData.BankName}
-                    onChange={handleInputChange}
+                    name="bankName"
+                    value={formData.bankName}
+                    onChange={(e) => setFormData({ ...formData, bankName: e.target.value })}
                     className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                     required
                   />
                   <input
                     type="text"
                     placeholder="Account Number *"
-                    name="AccountNumber"
-                    value={formData.AccountNumber}
-                    onChange={handleInputChange}
+                    name="accountNumber"
+                    value={formData.accountNumber}
+                    onChange={(e) => setFormData({ ...formData, accountNumber: e.target.value })}
                     className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                     required
                   />
                   <input
                     type="text"
                     placeholder="IFSC Code *"
-                    name="IFSCCode"
-                    value={formData.IFSCCode}
-                    onChange={handleInputChange}
+                    name="ifscCode"
+                    value={formData.ifscCode}
+                    onChange={(e) => setFormData({ ...formData, ifscCode: e.target.value })}
                     className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                     required
                   />
                   <select
-                    name="AccountType"
-                    value={formData.AccountType}
-                    onChange={handleInputChange}
+                    name="accountType"
+                    value={formData.accountType}
+                    onChange={(e) => setFormData({ ...formData, accountType: e.target.value })}
                     className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                     required
                   >
@@ -252,18 +242,18 @@ const OperatorRegistration = () => {
                   <input
                     type="text"
                     placeholder="Beneficiary Name *"
-                    name="BenificharyName"
-                    value={formData.BenificharyName}
-                    onChange={handleInputChange}
+                    name="beneficiaryName"
+                    value={formData.beneficiaryName}
+                    onChange={(e) => setFormData({ ...formData, beneficiaryName: e.target.value })}
                     className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                     required
                   />
                   <input
                     type="text"
                     placeholder="PAN Number *"
-                    name="PAN"
-                    value={formData.PAN}
-                    onChange={handleInputChange}
+                    name="pan"
+                    value={formData.pan}
+                    onChange={(e) => setFormData({ ...formData, pan: e.target.value })}
                     className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                     required
                   />
@@ -275,9 +265,9 @@ const OperatorRegistration = () => {
                   <input
                     type="text"
                     placeholder="GST Number *"
-                    name="GST"
-                    value={formData.GST}
-                    onChange={handleInputChange}
+                    name="gst"
+                    value={formData.gst}
+                    onChange={(e) => setFormData({ ...formData, gst: e.target.value })}
                     className="w-full p-3 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                     required
                   />

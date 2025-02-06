@@ -6,9 +6,10 @@ import SortBy from "./SortBy";
 import BusDetails from "./BusDetails";
 
 const Buses = () => {
+  const name = sessionStorage.getItem("name");
   return (
     <div className="">
-      <Navbar classes="!text-black dark:after:bg-black" />
+      <Navbar classes="!text-black dark:after:bg-black" name={name}/>
       <div className="px-6 mb-5">
         <div className="mt-20 pt-[2.5px]">
           <Details />

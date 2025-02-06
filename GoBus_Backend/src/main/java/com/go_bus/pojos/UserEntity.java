@@ -1,5 +1,8 @@
 package com.go_bus.pojos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -26,6 +29,7 @@ public class UserEntity extends BaseEntity{
 	private Long phoneNumber;
 	@Column(name = "email", length = 50, unique = true)
 	private String email;
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@Column(name = "password", length = 500)
 	private String password;
 	

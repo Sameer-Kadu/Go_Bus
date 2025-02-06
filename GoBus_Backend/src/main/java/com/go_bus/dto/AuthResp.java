@@ -1,5 +1,6 @@
 package com.go_bus.dto;
 
+import com.go_bus.pojos.OperatorDetailsEntity;
 import com.go_bus.pojos.UserRole;
 
 import lombok.AllArgsConstructor;
@@ -17,4 +18,5 @@ public class AuthResp {
 	private UserRole role;
 	private String name;
 	private String email;
+	private OperatorDetailsEntity operatorDetailsEntity;
 }
