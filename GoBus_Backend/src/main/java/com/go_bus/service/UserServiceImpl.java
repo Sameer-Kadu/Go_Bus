@@ -1,5 +1,6 @@
 package com.go_bus.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -12,6 +13,7 @@ import com.go_bus.custom_exceptions.ApiException;
 import com.go_bus.dto.ApiResponse;
 import com.go_bus.dto.UserDTO;
 import com.go_bus.pojos.UserEntity;
+import com.go_bus.pojos.UserRole;
 import com.go_bus.repository.UserRepository;
 @Service
 @Transactional
@@ -59,6 +61,12 @@ public class UserServiceImpl implements UserService {
 	 
 		    System.out.println("User found: " + userEntity.get());
 		    return modelMapper.map(userEntity.get(), UserEntity.class);
+	}
+
+	@Override
+	public List<UserEntity> findByRole(UserRole string) {
+		// TODO Auto-generated method stub
+		return userRepository.findByRole(string);
 	}
 
 	

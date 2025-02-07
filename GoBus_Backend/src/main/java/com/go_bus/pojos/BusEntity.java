@@ -3,6 +3,8 @@ package com.go_bus.pojos;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -52,6 +54,7 @@ public class BusEntity {
 	private BusAmenitiesEntity busAmenitiesId;
 
 	@OneToMany(mappedBy = "rto", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonManagedReference
 	private List<BusScheduleEntity> schedules = new ArrayList<>();
 
 	public void addSchedule(BusScheduleEntity schedule) {

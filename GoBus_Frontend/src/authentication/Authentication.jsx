@@ -44,15 +44,15 @@ const Authentication = () => {
       sessionStorage["name"] = name;
       // ROLE_ADMIN, ROLE_TRAVELER, ROLE_OPERATOR
       if (data.role == "ROLE_ADMIN") {
-        navigate("/home");
+        navigate("/adminhome");
       }
       if (data.role == "ROLE_TRAVELER") {
         navigate("/");
       }
       if (data.role == "ROLE_OPERATOR") {
 
-        console.log("appeoved"+data.operatorDetailsEntity.approved)
-        console.log(data.operatorDetailsEntity);
+        // console.log("appeoved"+data.operatorDetailsEntity.approved)
+        // console.log(data.operatorDetailsEntity);
         if (data.operatorDetailsEntity != null) {
           if (data.operatorDetailsEntity.approved) {
             navigate("/home");

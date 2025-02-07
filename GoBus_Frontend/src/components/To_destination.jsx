@@ -1,4 +1,4 @@
-const To_destination = () => {
+const To_destination = ({destination, setDestination}) => {
   return (
     <div>
       <label htmlFor="To" className="block text-sm/6 font-medium text-blue-100">
@@ -18,6 +18,7 @@ const To_destination = () => {
             name="destination"
             type="text"
             placeholder="Destination"
+            onChange={(e) => {setDestination(e.target.value)}}
             className="block min-w-0 pl-1 grow rounded-md py-1.5 pr-3 text-gray-900 placeholder:text-gray-400 focus:outline-none border-none focus:ring-2 focus:ring-white sm:text-sm/6"
           />
         </div>

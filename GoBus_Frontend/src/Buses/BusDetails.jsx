@@ -5,8 +5,9 @@ import Button from "../components/Button";
 import BusSeat from "../Bus/BusSeat";
 import { useState } from "react";
 
-const BusDetails=()=>{
+const BusDetails=({bus})=>{
   const [isVisible, setIsVisible] = useState(false);  
+
 
   const toggleDiv = () => {  
       setIsVisible(!isVisible);  

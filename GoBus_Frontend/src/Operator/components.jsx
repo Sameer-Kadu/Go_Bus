@@ -1,73 +1,315 @@
-import React, { useState } from 'react';
-import { Bell, Bus, Home, Plus, Settings, Star, DollarSign, Users, HelpCircle, Edit2, Trash2 } from 'lucide-react';
+import React, { useState } from "react";
+import {
+  Bell,
+  Bus,
+  Home,
+  Plus,
+  Settings,
+  Star,
+  DollarSign,
+  Users,
+  HelpCircle,
+  Edit2,
+  Trash2,
+} from "lucide-react";
+import { Result } from "postcss";
+import { addBus } from "../services/operator";
+import { FaArrowRight } from "react-icons/fa";
 
-// AddBus Component
 const AddBus = ({ onAddBus }) => {
   const [newBus, setNewBus] = useState({
-    name: '',
-    route: '',
-    capacity: '',
-    status: 'Active'
+    // Original fields
+    status: "Active",
+
+    // Additional fields
+    rtoRegNo: "",
+    ac: false,
+    sleeper: false,
+    seatCapacity: "",
+    chargingPoint: false,
+    complementary_food: false,
+    sheetPelow: false,
+    toilet: false,
+    wifi: false,
+    arrivalDate: "",
+    arrivalTime: "",
+    boardingPoint: "",
+    busFare: "",
+    departureDate: "",
+    departureTime: "",
+    destinationCity: "",
+    destinationPoint: "",
+    sourceCity: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Bus Data:", newBus);
+    const Result = await addBus(newBus);
+    console.log("result bus added"+ Result)
+    if(Result["status"] == 201)
+    {
+      alert("bus added successfully")
+    }
     onAddBus(newBus);
-    setNewBus({ name: '', route: '', capacity: '', status: 'Active' });
+    // Reset all fields after submission
+    setNewBus({
+      status: "Active",
+      rtoRegNo: "",
+      ac: false,
+      sleeper: false,
+      seatCapacity: "",
+      chargingPoint: false,
+      complementary_food: false,
+      sheetPelow: false,
+      toilet: false,
+      wifi: false,
+      arrivalDate: "",
+      arrivalTime: "",
+      boardingPoint: "",
+      busFare: "",
+      departureDate: "",
+      departureTime: "",
+      destinationCity: "",
+      destinationPoint: "",
+      sourceCity: "",
+    });
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
-      <h3 className="text-lg font-semibold mb-6">Add New Bus</h3>
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className=" mx-auto p-4 space-y-6">
+      <h2 className="text-2xl font-bold">Add New Bus</h2>
+
+      <div>
+        <label className="block mb-1 font-medium">Status</label>
+        <select
+          value={newBus.status}
+          onChange={(e) => setNewBus({ ...newBus, status: e.target.value })}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+        >
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </div>
+
+      {/* Additional Inputs */}
+      <div>
+        <label className="block mb-1 font-medium">
+          RTO Registration Number
+        </label>
+        <input
+          type="text"
+          value={newBus.rtoRegNo}
+          onChange={(e) => setNewBus({ ...newBus, rtoRegNo: e.target.value })}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+        />
+      </div>
+
+      <div className="flex space-x-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Bus Name</label>
+          <label className="block mb-1 font-medium">Is AC</label>
           <input
-            type="text"
-            required
-            value={newBus.name}
-            onChange={(e) => setNewBus({...newBus, name: e.target.value})}
+            type="checkbox"
+            checked={newBus.isAc}
+            onChange={(e) => setNewBus({ ...newBus, ac: e.target.checked })}
+            className="h-5 w-5"
+          />
+        </div>
+        <div>
+          <label className="block mb-1 font-medium">Is Sleeper</label>
+          <input
+            type="checkbox"
+            checked={newBus.isSleeper}
+            onChange={(e) =>
+              setNewBus({ ...newBus, sleeper: e.target.checked })
+            }
+            className="h-5 w-5"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label className="block mb-1 font-medium">Seat Capacity</label>
+        <input
+          type="number"
+          value={newBus.seatCapacity}
+          onChange={(e) =>
+            setNewBus({ ...newBus, seatCapacity: e.target.value })
+          }
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+        />
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block mb-1 font-medium">Charging Point</label>
+          <input
+            type="checkbox"
+            checked={newBus.chargingPoint}
+            onChange={(e) =>
+              setNewBus({ ...newBus, chargingPoint: e.target.checked })
+            }
+            className="h-5 w-5"
+          />
+        </div>
+        <div>
+          <label className="block mb-1 font-medium">Complementary Food</label>
+          <input
+            type="checkbox"
+            checked={newBus.complementary_food}
+            onChange={(e) =>
+              setNewBus({ ...newBus, complementary_food: e.target.checked })
+            }
+            className="h-5 w-5"
+          />
+        </div>
+        <div>
+          <label className="block mb-1 font-medium">Sheet Pillow</label>
+          <input
+            type="checkbox"
+            checked={newBus.sheetPelow}
+            onChange={(e) =>
+              setNewBus({ ...newBus, sheetPelow: e.target.checked })
+            }
+            className="h-5 w-5"
+          />
+        </div>
+        <div>
+          <label className="block mb-1 font-medium">Toilet</label>
+          <input
+            type="checkbox"
+            checked={newBus.toilet}
+            onChange={(e) => setNewBus({ ...newBus, toilet: e.target.checked })}
+            className="h-5 w-5"
+          />
+        </div>
+        <div>
+          <label className="block mb-1 font-medium">Wifi</label>
+          <input
+            type="checkbox"
+            checked={newBus.wifi}
+            onChange={(e) => setNewBus({ ...newBus, wifi: e.target.checked })}
+            className="h-5 w-5"
+          />
+        </div>
+      </div>
+      <div>
+        <label className="block mb-1 font-medium">Boarding City</label>
+        <input
+          type="text"
+          value={newBus.sourceCity}
+          onChange={(e) => setNewBus({ ...newBus, sourceCity: e.target.value })}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+        />
+      </div>
+
+      <div>
+        <label className="block mb-1 font-medium">Boarding Point</label>
+        <input
+          type="text"
+          value={newBus.boardingPoint}
+          onChange={(e) =>
+            setNewBus({ ...newBus, boardingPoint: e.target.value })
+          }
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+        />
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block mb-1 font-medium">Departure Date</label>
+          <input
+            type="date"
+            value={newBus.departureDate}
+            onChange={(e) =>
+              setNewBus({ ...newBus, departureDate: e.target.value })
+            }
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Route</label>
+          <label className="block mb-1 font-medium">Departure Time</label>
           <input
-            type="text"
-            required
-            value={newBus.route}
-            onChange={(e) => setNewBus({...newBus, route: e.target.value})}
+            type="time"
+            value={newBus.departureTime}
+            onChange={(e) =>
+              setNewBus({ ...newBus, departureTime: e.target.value })
+            }
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+          />
+        </div>
+      </div>
+      <div>
+        <label className="block mb-1 font-medium">Destination City</label>
+        <input
+          type="text"
+          value={newBus.destinationCity}
+          onChange={(e) =>
+            setNewBus({ ...newBus, destinationCity: e.target.value })
+          }
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+        />
+      </div>
+
+      <div>
+        <label className="block mb-1 font-medium">Destination Point</label>
+        <input
+          type="text"
+          value={newBus.destinationPoint}
+          onChange={(e) =>
+            setNewBus({ ...newBus, destinationPoint: e.target.value })
+          }
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+        />
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block mb-1 font-medium">Arrival Date</label>
+          <input
+            type="date"
+            value={newBus.arrivalDate}
+            onChange={(e) =>
+              setNewBus({ ...newBus, arrivalDate: e.target.value })
+            }
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Capacity</label>
+          <label className="block mb-1 font-medium">Arrival Time</label>
           <input
-            type="number"
-            required
-            value={newBus.capacity}
-            onChange={(e) => setNewBus({...newBus, capacity: e.target.value})}
+            type="time"
+            value={newBus.arrivalTime}
+            onChange={(e) =>
+              setNewBus({ ...newBus, arrivalTime: e.target.value })
+            }
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
           />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
-          <select
-            value={newBus.status}
-            onChange={(e) => setNewBus({...newBus, status: e.target.value})}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
-          >
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-          </select>
-        </div>
-        <button type="submit" className="w-full bg-black text-white py-2 px-4 rounded-lg hover:bg-gray-800">
-          Add Bus
-        </button>
-      </form>
-    </div>
+      </div>
+
+      
+
+      
+      <div>
+        <label className="block mb-1 font-medium">Bus Fare</label>
+        <input
+          type="number"
+          value={newBus.busFare}
+          onChange={(e) => setNewBus({ ...newBus, busFare: e.target.value })}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+        />
+      </div>
+      <button
+        type="submit"
+        className="w-full py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition duration-200"
+      >
+        Add Bus
+      </button>
+    </form>
   );
 };
+
+export default AddBus;
 
 // BusTable Component
 const BusTable = ({ buses, onEdit, onDelete }) => {
@@ -80,32 +322,52 @@ const BusTable = ({ buses, onEdit, onDelete }) => {
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Bus Name</th>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Route</th>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Status</th>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Capacity</th>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Actions</th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                Bus Number
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                Route
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                Status
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                Capacity
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
             {buses.map((bus) => (
               <tr key={bus.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4">{bus.name}</td>
-                <td className="px-6 py-4">{bus.route}</td>
+                <td className="px-6 py-4">{bus.rtoRegNo}</td>
+                <td className="px-6 py-4 inline-flex">{bus.schedules[0].sourceCity}<FaArrowRight className="ms-2 me-2 mt-1.5 w-3"/>{bus.schedules[0].destinationCity}</td>
                 <td className="px-6 py-4">
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    bus.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                  }`}>
-                    {bus.status}
+                  <span
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      bus.active
+                        ? "bg-green-100 text-green-800"
+                        : "bg-gray-100 text-gray-800"
+                    }`}
+                  >
+                    {bus.active ? "Active" : "InActive"}
                   </span>
                 </td>
-                <td className="px-6 py-4">{bus.capacity}</td>
+                <td className="px-6 py-4">{bus.seatCapacity}</td>
                 <td className="px-6 py-4">
                   <div className="flex space-x-3">
-                    <button onClick={() => onEdit(bus)} className="text-gray-600 hover:text-gray-900">
+                    <button
+                      onClick={() => onEdit(bus)}
+                      className="text-gray-600 hover:text-gray-900"
+                    >
                       <Edit2 size={18} />
                     </button>
-                    <button onClick={() => onDelete(bus.id)} className="text-red-600 hover:text-red-900">
+                    <button
+                      onClick={() => onDelete(bus.id)}
+                      className="text-red-600 hover:text-red-900"
+                    >
                       <Trash2 size={18} />
                     </button>
                   </div>
@@ -144,12 +406,24 @@ const BookingsList = ({ bookings }) => {
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Booking ID</th>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Bus</th>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Passenger</th>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Route</th>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Date</th>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">Status</th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                Booking ID
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                Bus
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                Passenger
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                Route
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                Date
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                Status
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -158,12 +432,18 @@ const BookingsList = ({ bookings }) => {
                 <td className="px-6 py-4">#{booking.id}</td>
                 <td className="px-6 py-4">{booking.busName}</td>
                 <td className="px-6 py-4">{booking.passenger}</td>
-                <td className="px-6 py-4">{booking.from} - {booking.to}</td>
+                <td className="px-6 py-4">
+                  {booking.from} - {booking.to}
+                </td>
                 <td className="px-6 py-4">{booking.date}</td>
                 <td className="px-6 py-4">
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    booking.status === 'Confirmed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                  }`}>
+                  <span
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      booking.status === "Confirmed"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-yellow-100 text-yellow-800"
+                    }`}
+                  >
                     {booking.status}
                   </span>
                 </td>
@@ -179,17 +459,17 @@ const BookingsList = ({ bookings }) => {
 // Sidebar Component
 const Sidebar = ({ activeTab, onTabChange }) => {
   const menuItems = [
-    { id: 'dashboard', icon: Home, label: 'Dashboard' },
-    { id: 'addBus', icon: Plus, label: 'Add Bus' },
-    { id: 'bookings', icon: Users, label: 'Bookings' },
-    { id: 'earnings', icon: DollarSign, label: 'Earnings' },
-    { id: 'feedback', icon: Star, label: 'Feedback' },
-    { id: 'support', icon: HelpCircle, label: 'Support' }
+    { id: "dashboard", icon: Home, label: "Dashboard" },
+    { id: "addBus", icon: Plus, label: "Add Bus" },
+    { id: "bookings", icon: Users, label: "Bookings" },
+    { id: "earnings", icon: DollarSign, label: "Earnings" },
+    { id: "feedback", icon: Star, label: "Feedback" },
+    { id: "support", icon: HelpCircle, label: "Support" },
   ];
 
   return (
     <div className="w-64 bg-black text-white p-6">
-      <div className='w-20 mb-2'>
+      <div className="w-20 mb-2">
         <img src="./img/GoBuslogo.png" alt="" />
       </div>
       <div className="mb-8">
@@ -201,7 +481,7 @@ const Sidebar = ({ activeTab, onTabChange }) => {
             key={item.id}
             onClick={() => onTabChange(item.id)}
             className={`flex items-center space-x-3 p-2 w-full rounded-lg ${
-              activeTab === item.id ? 'bg-white/10' : 'hover:bg-white/5'
+              activeTab === item.id ? "bg-white/10" : "hover:bg-white/5"
             }`}
           >
             <item.icon size={20} />
@@ -213,97 +493,324 @@ const Sidebar = ({ activeTab, onTabChange }) => {
   );
 };
 
-const EditBus = ({ bus, onSave, onCancel }) => {
-    const [formData, setFormData] = useState({
-        name: bus.name,
-        route: bus.route,
-        status: bus.status,
-        capacity: bus.capacity
-    })
-  
-    const handleChange = (e) => {
-      const { name, value } = e.target
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }))
-    }
-  
-    const handleSubmit = (e) => {
-      e.preventDefault()
-      onSave({ ...formData, id: bus.id })
-    }
-  
-    return (
-      <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
-        <h3 className="text-lg font-semibold mb-6">Edit Bus Details</h3>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Bus Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
-            />
-          </div>
-  
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Route</label>
-            <input
-              type="text"
-              name="route"
-              value={formData.route}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
-            />
-          </div>
-  
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
-            <select
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
-            >
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-          </div>
-  
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Capacity</label>
-            <input
-              type="number"
-              name="capacity"
-              value={formData.capacity}
-              onChange={handleChange}
-              required
-              min="1"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
-            />
-          </div>
-  
-          <div className="flex justify-end space-x-4 pt-4">
-            <button
-              type="button"
-              onClick={onCancel}
-              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
-            >
-              Cancel
-            </button>
-            <button type="submit" className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800">
-              Save Changes
-            </button>
-          </div>
-        </form>
-      </div>
-    )
-  }
+import {useEffect } from "react";
 
+const EditBus = ({ bus, onSave, onCancel }) => {
+  console.log(bus);
+  // Initialize form data with all bus fields.
+  // In case the bus prop is not immediately available, you can set default values.
+  const [formData, setFormData] = useState({
+    status: bus.status || "Active",
+    rtoRegNo: bus.rtoRegNo || "",
+    ac: bus.ac || false,
+    sleeper: bus.sleeper || false,
+    seatCapacity: bus.seatCapacity || "",
+    chargingPoint: bus.chargingPoint || false,
+    complementary_food: bus.complementary_food || false,
+    sheetPelow: bus.sheetPelow || false,
+    toilet: bus.toilet || false,
+    wifi: bus.wifi || false,
+    arrivalDate: bus.arrivalDate || "",
+    arrivalTime: bus.arrivalTime || "",
+    boardingPoint: bus.boardingPoint || "",
+    busFare: bus.busFare || "",
+    departureDate: bus.departureDate || "",
+    departureTime: bus.departureTime || "",
+    destinationCity: bus.destinationCity || "",
+    destinationPoint: bus.destinationPoint || "",
+    sourceCity: bus.sourceCity || "",
+  });
+
+  // In case the bus prop is loaded asynchronously,
+  // you can update the state when bus changes.
+  useEffect(() => {
+    setFormData({
+      
+      status: bus.active || "Active",
+      rtoRegNo: bus.rtoRegNo || "",
+      ac: bus.ac || false,
+      sleeper: bus.sleeper || false,
+      seatCapacity: bus.seatCapacity || "",
+      chargingPoint: bus.chargingPoint || false,
+      complementary_food: bus.complementary_food || false,
+      sheetPelow: bus.sheetPelow || false,
+      toilet: bus.toilet || false,
+      wifi: bus.wifi || false,
+      arrivalDate: bus.arrivalDate || "",
+      arrivalTime: bus.arrivalTime || "",
+      boardingPoint: bus.boardingPoint || "",
+      busFare: bus.busFare || "",
+      departureDate: bus.departureDate || "",
+      departureTime: bus.departureTime || "",
+      destinationCity: bus.destinationCity || "",
+      destinationPoint: bus.destinationPoint || "",
+      sourceCity: bus.sourceCity || "",
+    });
+  }, [bus]);
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    // For checkbox inputs, use the checked property.
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Pass the updated bus data including its id
+    onSave({ ...formData, id: bus.id });
+  };
+
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+      <h2 className="text-2xl font-bold mb-4">Edit Bus</h2>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Status */}
+        <div>
+          <label className="block mb-1 font-medium">Status</label>
+          <select
+            name="status"
+            value={formData.status}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+          >
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+
+        {/* RTO Registration Number */}
+        <div>
+          <label className="block mb-1 font-medium">
+            RTO Registration Number
+          </label>
+          <input
+            type="text"
+            name="rtoRegNo"
+            value={formData.rtoRegNo}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+          />
+        </div>
+
+        {/* AC & Sleeper */}
+        <div className="flex space-x-4">
+          <div>
+            <label className="block mb-1 font-medium">Is AC</label>
+            <input
+              type="checkbox"
+              name="ac"
+              checked={formData.ac}
+              onChange={handleChange}
+              className="h-5 w-5"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-medium">Is Sleeper</label>
+            <input
+              type="checkbox"
+              name="sleeper"
+              checked={formData.sleeper}
+              onChange={handleChange}
+              className="h-5 w-5"
+            />
+          </div>
+        </div>
+
+        {/* Seat Capacity */}
+        <div>
+          <label className="block mb-1 font-medium">Seat Capacity</label>
+          <input
+            type="number"
+            name="seatCapacity"
+            value={formData.seatCapacity}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+          />
+        </div>
+
+        {/* Additional Facilities */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block mb-1 font-medium">Charging Point</label>
+            <input
+              type="checkbox"
+              name="chargingPoint"
+              checked={formData.chargingPoint}
+              onChange={handleChange}
+              className="h-5 w-5"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-medium">Complementary Food</label>
+            <input
+              type="checkbox"
+              name="complementary_food"
+              checked={formData.complementary_food}
+              onChange={handleChange}
+              className="h-5 w-5"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-medium">Sheet Pillow</label>
+            <input
+              type="checkbox"
+              name="sheetPelow"
+              checked={formData.sheetPelow}
+              onChange={handleChange}
+              className="h-5 w-5"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-medium">Toilet</label>
+            <input
+              type="checkbox"
+              name="toilet"
+              checked={formData.toilet}
+              onChange={handleChange}
+              className="h-5 w-5"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-medium">Wifi</label>
+            <input
+              type="checkbox"
+              name="wifi"
+              checked={formData.wifi}
+              onChange={handleChange}
+              className="h-5 w-5"
+            />
+          </div>
+        </div>
+
+        {/* Source City / Boarding City */}
+        <div>
+          <label className="block mb-1 font-medium">Boarding City</label>
+          <input
+            type="text"
+            name="sourceCity"
+            value={formData.sourceCity}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+          />
+        </div>
+
+        {/* Boarding Point */}
+        <div>
+          <label className="block mb-1 font-medium">Boarding Point</label>
+          <input
+            type="text"
+            name="boardingPoint"
+            value={formData.boardingPoint}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+          />
+        </div>
+
+        {/* Departure Date & Time */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block mb-1 font-medium">Departure Date</label>
+            <input
+              type="date"
+              name="departureDate"
+              value={formData.departureDate}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-medium">Departure Time</label>
+            <input
+              type="time"
+              name="departureTime"
+              value={formData.departureTime}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+            />
+          </div>
+        </div>
+
+        {/* Destination City & Point */}
+        <div>
+          <label className="block mb-1 font-medium">Destination City</label>
+          <input
+            type="text"
+            name="destinationCity"
+            value={formData.destinationCity}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+          />
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium">Destination Point</label>
+          <input
+            type="text"
+            name="destinationPoint"
+            value={formData.destinationPoint}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+          />
+        </div>
+
+        {/* Arrival Date & Time */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block mb-1 font-medium">Arrival Date</label>
+            <input
+              type="date"
+              name="arrivalDate"
+              value={formData.arrivalDate}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-medium">Arrival Time</label>
+            <input
+              type="time"
+              name="arrivalTime"
+              value={formData.arrivalTime}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+            />
+          </div>
+        </div>
+
+        {/* Bus Fare */}
+        <div>
+          <label className="block mb-1 font-medium">Bus Fare</label>
+          <input
+            type="number"
+            name="busFare"
+            value={formData.busFare}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-black focus:border-black"
+          />
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex justify-end space-x-4 pt-4">
+          <button
+            type="button"
+            onClick={onCancel}
+            className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
+          >
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
 
 export { AddBus, BusTable, StatsCards, BookingsList, Sidebar, EditBus };

@@ -13,4 +13,6 @@ public interface OperatorRepository extends JpaRepository<OperatorDetailsEntity,
 
     // 🔹 Get operator details by UserEntity
     OperatorDetailsEntity findByUserEntity(UserEntity user);
+
+ OperatorDetailsEntity findByAgencyName(String agencyName);
 }

@@ -2,37 +2,48 @@ import { FaArrowRight } from "react-icons/fa";
 import Button from "../components/Button";
 import { TiLocationArrow } from "react-icons/ti";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-const Details = () => {
+
+const Details = ({ source, destination, date }) => {
+  // Format the date if it exists; assume date is in "YYYY-MM-DD" format
+  const formattedDate = date
+    ? new Date(date).toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "short",
+      })
+    : "";
+
   return (
     <div>
       <div className="text-sm flex inline-flex gap-2 mb-3">
-        <b>Bus Ticket </b> <IoIosArrowForward className="mt-1"/> Pune To Wardha Bus
+        <b>Bus Ticket </b>
+        <IoIosArrowForward className="mt-1" /> {source} To {destination} Bus
       </div>
       <div>
-        <b>Pune to Wardha Bus</b>
+        <b>
+          {source} To {destination} Bus
+        </b>
       </div>
-      <hr className="border-gray-400 mt-2"></hr>
+      <hr className="border-gray-400 mt-2" />
       <div className="flex gap-4 mt-2 mb-2">
         <div className="mt-2 flex gap-4">
-          Pune
+          {source}
           <FaArrowRight className="mt-1" />
-          Wardha{" "}
-          <IoIosArrowBack className="mt-1"/>
-          <span>
-             27 Jan 
-          </span>
-          <IoIosArrowForward className="mt-1"/>
+          {destination}
+          <IoIosArrowBack className="mt-1" />
+          <span>{formattedDate}</span>
+          <IoIosArrowForward className="mt-1" />
         </div>
 
         <Button
           id="watch-trailer"
           title="Modify"
-          leftIcon={<TiLocationArrow/>}
+          leftIcon={<TiLocationArrow />}
           containerClass="!bg-yellow-200 w-10 flex-center gap-1"
         />
       </div>
-      <hr className="border-gray-400"></hr>
+      <hr className="border-gray-400" />
     </div>
   );
 };
+
 export default Details;

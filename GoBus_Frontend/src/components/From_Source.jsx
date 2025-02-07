@@ -1,4 +1,4 @@
-const From_Source = () => {
+const From_Source = ({source, setSource}) => {
   return (
     <div>
       <label
@@ -21,6 +21,7 @@ const From_Source = () => {
             name="price"
             type="text"
             placeholder="Source"
+            onChange={(e) => {setSource(e.target.value)}}
             className="block min-w-0 pl-1 grow mr-4 rounded-md py-1.5 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 focus:ring-2 focus:ring-white border-none sm:text-sm/6"
           />
         </div>

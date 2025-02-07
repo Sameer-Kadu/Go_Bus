@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/all";
 import { TiLocationArrow } from "react-icons/ti";
 import To_destination from "./To_destination.jsx";
 import From_Source from "./From_Source.jsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,6 +14,9 @@ const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [hasClicked, setHasClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [source, setSource] = useState("");
+  const [destination, setDestination] = useState("");
+  const [date , setDate] = useState("");
   const [loadedVideos, setLoadedVideos] = useState(0);
   const totalVideos = 4;
   const nextVideoRef = useRef(null);
@@ -79,6 +82,16 @@ const Home = () => {
       },
     });
   });
+
+  const navigate = useNavigate();
+
+const handelSearch = () => {
+  navigate(
+    `/buses?source=${encodeURIComponent(source)}&destination=${encodeURIComponent(
+      destination
+    )}&date=${encodeURIComponent(date)}`
+  );
+}
 
   // video source
   const getVideoSrc = (index) => `videos/Home-${index}.mp4`;
@@ -158,7 +171,7 @@ const Home = () => {
 
             {/**/}
 
-            <From_Source />
+            <From_Source source={source} setSource= {setSource}/>
 
             {/**/}
 
@@ -172,7 +185,7 @@ const Home = () => {
 
             {/**/}
 
-            <To_destination />
+            <To_destination destination={destination} setDestination={setDestination}/>
 
             {/**/}
             <div className=" py-2 mb-3 flex items-center h-full gap-3 group relative pr-12">
@@ -181,18 +194,20 @@ const Home = () => {
                 className="pl-[50px] absolute appearance-none bg-transparent text-white text-lg outline-none cursor-pointer date-input border-none"
                 type="date"
                 placeholder="Select a date"
+                onChange={(e) => {setDate(e.target.value)}}
               />
               {/*<p className="text-gray-400">Date</p>*/}
             </div>
             {/**/}
-            <Link to="/buses">
+           
               <Button
                 id="Search_Bus"
                 title="Search Bus"
                 leftIcon={<TiLocationArrow />}
                 containerClass="!bg-yellow-300 flex-center gap-1"
+                change={handelSearch}
               />
-            </Link>
+            
           </div>
         </div>
       </div>

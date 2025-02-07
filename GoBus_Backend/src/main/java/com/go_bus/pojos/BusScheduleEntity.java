@@ -9,6 +9,7 @@ import java.util.Objects;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -37,6 +38,7 @@ public class BusScheduleEntity {
 
 	@ManyToOne
 	@JoinColumn(name="rto_reg_number")
+	@JsonBackReference
     private BusEntity rto;
 
 	@Column(name = "boarding_point")

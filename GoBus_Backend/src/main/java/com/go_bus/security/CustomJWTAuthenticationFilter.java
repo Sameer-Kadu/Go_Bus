@@ -24,8 +24,14 @@ public class CustomJWTAuthenticationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request,
 			HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
+		
+		System.out.println("inside filter class");
+		
 		// 1. Check authorization header from incoming request
 		String authHeader=request.getHeader("Authorization");
+		
+		System.out.println(authHeader);
+		
 		//2. Check if its not null n starts with - Bearer
 		if(authHeader != null && authHeader.startsWith("Bearer ")) {
 			//3. extract JWT

@@ -1,4 +1,4 @@
-package com.go_bus.service;
+package com.go_bus.repository;
 
 import java.util.List;
 

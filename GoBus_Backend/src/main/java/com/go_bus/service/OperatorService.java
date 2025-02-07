@@ -15,6 +15,12 @@ public interface OperatorService {
 	OperatorDetailsEntity findByUserEntity(UserEntity user);
 
 	List<BusEntity> getBuses(UserEntity user);
+
+	List<OperatorDetailsEntity> findAll();
+
+	OperatorDetailsEntity findByAgencyName(String agencyName);
+
+	void save(OperatorDetailsEntity operatorDetailsEntity);
 	
 
 }

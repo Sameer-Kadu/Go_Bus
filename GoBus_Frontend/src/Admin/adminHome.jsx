@@ -1,4 +1,5 @@
-import { useState } from "react"
+import {useEffect, useState } from "react"
+import { approve, getOperator } from "../services/operator";
 
 // const operatorShape = {
 //   id: 'number',
@@ -15,21 +16,59 @@ import { useState } from "react"
 // }
 
 const AdminDashboard = () => {
-  const [operators, setOperators] = useState([
-    { id: 1, name: "John Doe", agency: "XYZ Travels", status: "Pending" },
-    { id: 2, name: "Jane Smith", agency: "ABC Tours", status: "Pending" },
-  ])
-
-  const [buses, setBuses] = useState([
-    { id: 1, name: "Super Express", route: "Mumbai - Pune", status: "Pending" },
-    { id: 2, name: "Night Rider", route: "Delhi - Jaipur", status: "Pending" },
-  ])
+  const [operators, setOperators] = useState([])
+  const onLoadItems = async () => {
+    try {
+      const result = await getOperator();
+      console.log("API Response:", result);
+  
+      if (result.status === 200) {
+        // Ensure that `operators` is always an array
+        const fetchedOperators = Array.isArray(result.data)
+          ? result.data
+          : result.data.operators || [];
+  
+        setOperators(fetchedOperators);
+      } else {
+        setOperators([]); // Set empty array if no data
+        alert(result.error || "No data returned");
+      }
+    } catch (error) {
+      console.error("Error fetching operators:", error);
+      setOperators([]); // Prevent undefined state
+    }
+  };
+  
+  
+  useEffect(() => {
+      // the function (1st param) will be called as soon as
+      // the component gets mounted (loaded)
+      console.log('component is mounted...')
+      onLoadItems()
+  
+      return () => {
+        // this function will get called when the component
+        // gets unmounted (unloaded)
+        console.log('component is unmounted...')
+      }
+    }, [])
+  const [buses, setBuses] = useState([])
 
   const [expandedSection, setExpandedSection] = useState("operators")
 
-  const handleApprove = (type, id) => {
+  const handleApprove = async (type, id, agencyName) => {
+    
     if (type === "operator") {
-      setOperators(operators.map((op) => (op.id === id ? { ...op, status: "Approved" } : op)))
+     
+      setOperators(operators.map((op) => (op.id === id ? { ...op, approve: true } : op)))
+      
+      const result = await approve(agencyName);
+      console.log("result:- "+ result)
+      if(result["status"] == 200)
+      {
+        alert("approved")
+        onLoadItems()
+      }
     } else {
       setBuses(buses.map((bus) => (bus.id === id ? { ...bus, status: "Approved" } : bus)))
     }
@@ -81,8 +120,8 @@ const AdminDashboard = () => {
               <div>
                 <p className="text-gray-500 text-sm">Pending Approvals</p>
                 <h2 className="text-3xl font-bold text-gray-800">
-                  {operators.filter((op) => op.status === "Pending").length +
-                    buses.filter((bus) => bus.status === "Pending").length}
+                  {operators.filter((op) => !op.approved).length +
+                    buses.filter((bus) => !bus.approved).length}
                 </h2>
               </div>
             </div>
@@ -131,32 +170,32 @@ const AdminDashboard = () => {
                     <tbody className="divide-y divide-gray-100">
                       {operators.map((operator) => (
                         <tr key={operator.id} className="hover:bg-gray-50">
-                          <td className="p-4">{operator.name}</td>
-                          <td className="p-4">{operator.agency}</td>
+                          <td className="p-4">{operator.ownerName}</td>
+                          <td className="p-4">{operator.agencyName}</td>
                           <td className="p-4">
                             <span className={`px-3 py-1 rounded-full text-sm ${
-                              operator.status === "Pending" ? "bg-amber-100 text-amber-700" :
-                              operator.status === "Approved" ? "bg-green-100 text-green-700" :
+                              operator.approved ? "bg-amber-100 text-amber-700" :
+                              operator.approved ? "bg-green-100 text-green-700" :
                               "bg-red-100 text-red-700"
                             }`}>
-                              {operator.status}
+                              {operator.approved ? "Approved" : "Pending"}
                             </span>
                           </td>
                           <td className="p-4">
                             <div className="flex space-x-2">
                               <button
                                 className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                                onClick={() => handleApprove("operator", operator.id)}
-                                disabled={operator.status !== "Pending"}
+                                onClick={() => handleApprove("operator", operator.id, operator.agencyName,)}
+                                disabled={operator.approved}
                               >
                                 Approve
                               </button>
                               <button
-                                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                 onClick={() => handleReject("operator", operator.id)}
-                                disabled={operator.status !== "Pending"}
+                                disabled={operator.approved}
                               >
-                                Reject
+                                Details
                               </button>
                             </div>
                           </td>

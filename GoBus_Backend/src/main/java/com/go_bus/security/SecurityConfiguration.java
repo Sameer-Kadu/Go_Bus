@@ -34,7 +34,7 @@ public class SecurityConfiguration {
             .csrf(csrf -> csrf.disable()) // Disable CSRF (Required for APIs)
             .authorizeHttpRequests(request -> request
                 .requestMatchers("/User/signup", "/User/signin", "/v*/api-doc*/**", "/swagger-ui/**").permitAll()
-                .requestMatchers("/operator/register").authenticated()  // ✅ Allow authenticated users to access /operator/register
+                .requestMatchers("/operator/register", "/operator/addBus", "/operator/getOperator", "/operator/approve").authenticated()// ✅ Allow authenticated users to access /operator/register
                 .requestMatchers(HttpMethod.OPTIONS).permitAll() // ✅ Allow Preflight (OPTIONS) Requests
                 .anyRequest().authenticated()
             )

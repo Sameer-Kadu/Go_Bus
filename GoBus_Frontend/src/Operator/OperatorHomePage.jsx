@@ -21,8 +21,8 @@ const OperatorHomePage = () => {
       const result = await getBuses();
       console.log("result", result);
       
-      if (result && result.status === 'success' && Array.isArray(result.data)) {
-        setBuses(result.data);
+      if (result.length > 0) {
+        setBuses(result);
       } else {
         // Fallback: set an empty array to avoid undefined
         setBuses([]);

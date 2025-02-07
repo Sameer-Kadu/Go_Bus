@@ -10,6 +10,7 @@ import com.go_bus.dto.OperatorDetailsDTO;
 import com.go_bus.pojos.BusEntity;
 import com.go_bus.pojos.OperatorDetailsEntity;
 import com.go_bus.pojos.UserEntity;
+import com.go_bus.repository.BusRepository;
 import com.go_bus.repository.OperatorRepository;
 
 @Service
@@ -65,4 +66,21 @@ public class OperatorServiceImpl implements OperatorService {
         // Assuming BusRepository has a method to find buses by operator
         return busRepository.findByOperator(operator);
     }
+
+	@Override
+	public List<OperatorDetailsEntity> findAll() {
+		// TODO Auto-generated method stub
+		return operatorRepository.findAll();
+	}
+
+	@Override
+	public OperatorDetailsEntity findByAgencyName(String agencyName) {
+		// TODO Auto-generated method stub
+		return operatorRepository.findByAgencyName(agencyName);
+	}
+
+	@Override
+	public void save(OperatorDetailsEntity operatorDetailsEntity) {
+		operatorRepository.save(operatorDetailsEntity);
+	}
 }
