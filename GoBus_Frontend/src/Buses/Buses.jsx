@@ -6,7 +6,7 @@ import Filter from "./Filter";
 import SortBy from "./SortBy";
 import BusDetails from "./BusDetails";
 import { useEffect, useState } from "react";
-import { getBuses } from "../services/operator";
+import {  getTravelerBuses } from "../services/operator";
 
 const Buses = () => {
   // Retrieve query parameters from the URL
@@ -18,36 +18,38 @@ const Buses = () => {
   // For example, you might have stored a user name in sessionStorage
   const name = sessionStorage.getItem("name");
   const [buses, setBuses] = useState([]);
-  const onLoadItems = async () => {
-    try {
-      const result = await getBuses();
-      console.log("result", result);
-      
-      if (result.length > 0) {
-        setBuses(result);
-      } else {
-        // Fallback: set an empty array to avoid undefined
+  useEffect(() => {
+    const onLoadItems = async () => {
+      try {
+        const result = await getTravelerBuses({ source, destination, date }); // Pass as an object
+    
+        console.log("result", result);
+    
+        if (Array.isArray(result) && result.length > 0) {
+          sessionStorage.setItem("scheduleId", result[0].scheduleId)
+          console.log("here session schedule id"+sessionStorage.getItem("scheduleId"))
+          setBuses(result);
+        } else {
+          setBuses([]);
+          alert(result && result.error ? result.error : "No buses found");
+        }
+      } catch (error) {
+        console.error("Error fetching buses:", error);
         setBuses([]);
-        alert(result && result.error ? result.error : "No data returned");
       }
-    } catch (error) {
-      console.error("Error fetching buses:", error);
-      setBuses([]);
-    }
-  }
+    };
 
-    useEffect(() => {
-      // the function (1st param) will be called as soon as
-      // the component gets mounted (loaded)
-      console.log('component is mounted...')
-      onLoadItems()
-  
-      return () => {
-        // this function will get called when the component
-        // gets unmounted (unloaded)
-        console.log('component is unmounted...')
-      }
-    }, [])
+    // the function (1st param) will be called as soon as
+    // the component gets mounted (loaded)
+    console.log('component is mounted...')
+    onLoadItems()
+
+    return () => {
+      // this function will get called when the component
+      // gets unmounted (unloaded)
+      console.log('component is unmounted...')
+    }
+  },[source, destination, date])
 
 
 

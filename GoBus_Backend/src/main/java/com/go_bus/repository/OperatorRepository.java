@@ -12,7 +12,7 @@ public interface OperatorRepository extends JpaRepository<OperatorDetailsEntity,
     boolean existsByUserEntity(UserEntity user);
 
     // 🔹 Get operator details by UserEntity
-    OperatorDetailsEntity findByUserEntity(UserEntity user);
+    OperatorDetailsEntity findByUserEntity(UserEntity long1);
 
  OperatorDetailsEntity findByAgencyName(String agencyName);
 }

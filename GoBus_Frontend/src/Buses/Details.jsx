@@ -2,6 +2,7 @@ import { FaArrowRight } from "react-icons/fa";
 import Button from "../components/Button";
 import { TiLocationArrow } from "react-icons/ti";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import PropTypes from 'prop-types';
 
 const Details = ({ source, destination, date }) => {
   // Format the date if it exists; assume date is in "YYYY-MM-DD" format
@@ -14,7 +15,7 @@ const Details = ({ source, destination, date }) => {
 
   return (
     <div>
-      <div className="text-sm flex inline-flex gap-2 mb-3">
+      <div className="text-sm inline-flex gap-2 mb-3">
         <b>Bus Ticket </b>
         <IoIosArrowForward className="mt-1" /> {source} To {destination} Bus
       </div>
@@ -45,5 +46,11 @@ const Details = ({ source, destination, date }) => {
     </div>
   );
 };
+Details.propTypes = {
+  source: PropTypes.string.isRequired,
+  destination: PropTypes.string.isRequired,
+  date: PropTypes.string,
+};
 
 export default Details;
+

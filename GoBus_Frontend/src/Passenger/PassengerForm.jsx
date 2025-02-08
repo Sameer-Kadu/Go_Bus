@@ -1,8 +1,8 @@
-import { useState } from 'react';
+
 import PropTypes from 'prop-types';
 import { UserCircle } from 'lucide-react';
-const PassengerForm = ({ passengerNumber, seatNumber }) => {
-    const [stateValue, setStateValue] = useState('Maharashtra');
+const PassengerForm = ({ passengerNumber, seatNumber , onChange}) => {
+    // const [stateValue, setStateValue] = useState('Maharashtra');
   
     return (
       <div className="mb-6 p-6 border rounded-lg shadow-sm bg-white">
@@ -29,6 +29,7 @@ const PassengerForm = ({ passengerNumber, seatNumber }) => {
               type="text"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               placeholder="Enter passenger name"
+              onChange={(e) => onChange("name", e.target.value)}
             />
           </div>
   
@@ -45,6 +46,7 @@ const PassengerForm = ({ passengerNumber, seatNumber }) => {
                     name={`gender-${passengerNumber}`}
                     value="male"
                     className="w-4 h-4 text-teal-600 border-gray-300 focus:ring-teal-500"
+                    onChange={(e) => onChange("gender", e.target.value)}
                   />
                   <span className="ml-2 text-sm text-gray-700">Male</span>
                 </label>
@@ -54,6 +56,7 @@ const PassengerForm = ({ passengerNumber, seatNumber }) => {
                     name={`gender-${passengerNumber}`}
                     value="female"
                     className="w-4 h-4 text-teal-600 border-gray-300 focus:ring-teal-500"
+                    onChange={(e) => onChange("gender", e.target.value)}
                   />
                   <span className="ml-2 text-sm text-gray-700">Female</span>
                 </label>
@@ -69,33 +72,37 @@ const PassengerForm = ({ passengerNumber, seatNumber }) => {
                 type="number"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
                 placeholder="Age"
+                onChange={(e) => onChange("age", e.target.value)}
               />
             </div>
           </div>
   
           {/* State of Residence */}
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               State of Residence*
             </label>
             <div className="flex items-center justify-between">
               <span className="text-gray-700">{stateValue}</span>
               <button 
-                onClick={() => {/* Handle state change */ setStateValue('Goa')}}
+                onClick={() => {setStateValue('Goa')}}
                 className="text-blue-600 hover:text-blue-800 text-sm font-medium"
               >
                 Change
-              </button>
-            </div>
-          </div>
+          </button>
+           </div>
+          </div> */}
         </div>
       </div>
     );
 };
+
+PassengerForm.propTypes = {
+  passengerNumber: PropTypes.number.isRequired,
+  seatNumber: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
     export default PassengerForm;
-  PassengerForm.propTypes = {
-    passengerNumber: PropTypes.number.isRequired,
-    seatNumber: PropTypes.number.isRequired,
-  };
+ 
   
   

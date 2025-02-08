@@ -28,3 +28,22 @@ export async function loginUser(email, password){
     return {status: 'error', error: ex}
   }
 }
+
+export async function createBooking(bookingObject)
+
+{
+  const token = sessionStorage.getItem("token");
+  try{
+    const url = createUrl('bus/booking')
+    const response = await axios.post(url, bookingObject, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }});
+
+      console.log("ssssssssss"+response);
+    return response;
+  }catch(ex){
+    return {status: 'error', error: ex}
+  }
+}

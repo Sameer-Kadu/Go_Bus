@@ -12,7 +12,6 @@ import lombok.Setter;
 @Setter
 @Getter
 @Embeddable
-@Table(name = "passenger_tb")
 public class PassengerEntity {
 	@Column(name="traveller_gender")
 	private Gender Travellergender;

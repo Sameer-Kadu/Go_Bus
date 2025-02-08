@@ -39,9 +39,11 @@ const Authentication = () => {
       const data = result.data;
       const token = data.jwt;
       const name = data.name;
+      const email = data.email;
       console.log("your name" + name);
       sessionStorage["token"] = token;
       sessionStorage["name"] = name;
+      sessionStorage["email"] = email;
       // ROLE_ADMIN, ROLE_TRAVELER, ROLE_OPERATOR
       if (data.role == "ROLE_ADMIN") {
         navigate("/adminhome");

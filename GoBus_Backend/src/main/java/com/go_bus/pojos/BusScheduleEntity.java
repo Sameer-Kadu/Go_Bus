@@ -14,13 +14,17 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.criteria.Fetch;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -58,7 +62,6 @@ public class BusScheduleEntity {
 
 	@Column(name = "departure_time")
 	private LocalTime departureTime;
-
 	@Column(name = "arrival_time")
 	private LocalTime arrivalTime;
 
@@ -70,17 +73,17 @@ public class BusScheduleEntity {
 
 	@Column(name = "bus_fare")
 	private double busFare;
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@ElementCollection
-	@CollectionTable(name = "seat_allocation_tb")
-	private List<SeatAllocationEntity> seatAllocationEntities = new ArrayList<>();
+	
+	@CollectionTable(name = "seat_entities")
+	@ElementCollection(targetClass = SeatAllocationEntity.class ,fetch = FetchType.EAGER)
+	private List<SeatAllocationEntity>  seatAllocationEntities = new ArrayList<>();
 
 	// boolean isBooked, int seatNo, Gender travellerGender
 	public void initializeSeat() {
 
-//		for (int i = 0; i < rto.getSeatCapacity(); i++) {
-//			seatAllocationEntities.add(new SeatAllocationEntity(false, i, Gender.NOTASSIGNED));
-//		}
+		for (int i = 0; i < rto.getSeatCapacity(); i++) {
+			seatAllocationEntities.add(new SeatAllocationEntity(false, i, Gender.NOTASSIGNED));
+		}
 
 	}
 

@@ -186,6 +186,8 @@ public class OperatorController {
 	      busScheduleEntity.setBusFare(busDto.getBusFare());
 	      // Assuming that initially all seats are available.
 	      busScheduleEntity.setAvailableSeats(busDto.getSeatCapacity());
+	      
+	      
 
 	      // --- Create BusEntity ---
 	      BusEntity busEntity = new BusEntity();
@@ -207,6 +209,7 @@ public class OperatorController {
 
 	      // Set the saved bus in the schedule and then save the schedule
 	      busScheduleEntity.setRto(busEntity2);
+	      busScheduleEntity.initializeSeat();
 	      BusScheduleEntity busScheduleEntity2 = busScheduleService.addSchedule(busScheduleEntity);
 
 	      // Return the created schedule or another appropriate response
