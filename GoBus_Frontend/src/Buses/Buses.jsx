@@ -7,6 +7,7 @@ import SortBy from "./SortBy";
 import BusDetails from "./BusDetails";
 import { useEffect, useState } from "react";
 import {  getTravelerBuses } from "../services/operator";
+import { toast } from "react-toastify";
 
 const Buses = () => {
   // Retrieve query parameters from the URL
@@ -31,9 +32,11 @@ const Buses = () => {
           setBuses(result);
         } else {
           setBuses([]);
-          alert(result && result.error ? result.error : "No buses found");
+          toast.error(result && result.error ? result.error : "No buses found")
+          
         }
       } catch (error) {
+        toast.error("Error fetching buses:", error)
         console.error("Error fetching buses:", error);
         setBuses([]);
       }
