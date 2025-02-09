@@ -1,5 +1,6 @@
 import {useEffect, useState } from "react"
 import { approve, getOperator } from "../services/operator";
+import { toast } from "react-toastify";
 
 // const operatorShape = {
 //   id: 'number',
@@ -31,7 +32,10 @@ const AdminDashboard = () => {
         setOperators(fetchedOperators);
       } else {
         setOperators([]); // Set empty array if no data
-        alert(result.error || "No data returned");
+        
+toast.error(result.error || "No data returned");
+
+        // alert(result.error || "No data returned");
       }
     } catch (error) {
       console.error("Error fetching operators:", error);
@@ -66,7 +70,8 @@ const AdminDashboard = () => {
       console.log("result:- "+ result)
       if(result["status"] == 200)
       {
-        alert("approved")
+        toast.success("Operator approved successfully");
+        // alert("approved")
         onLoadItems()
       }
     } else {
@@ -192,7 +197,7 @@ const AdminDashboard = () => {
                               </button>
                               <button
                                 className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                                onClick={() => handleReject("operator", operator.id)}
+                                onClick={() => toast.success("feature is currently unavailable")}
                                 disabled={operator.approved}
                               >
                                 Details
@@ -209,7 +214,7 @@ const AdminDashboard = () => {
           </div>
 
           {/* Buses Table */}
-          <div className="bg-white rounded-xl shadow-sm">
+          {/* <div className="bg-white rounded-xl shadow-sm">
             <div className="flex justify-between items-center p-6 border-b border-gray-100">
               <h2 className="text-xl font-semibold text-gray-800">Pending Buses</h2>
               <button 
@@ -270,7 +275,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

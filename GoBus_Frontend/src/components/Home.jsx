@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState} from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Button from "./Button.jsx";
@@ -7,10 +7,13 @@ import { TiLocationArrow } from "react-icons/ti";
 import To_destination from "./To_destination.jsx";
 import From_Source from "./From_Source.jsx";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
+  const {t} = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(1);
   const [hasClicked, setHasClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +33,12 @@ const Home = () => {
     setHasClicked(true);
     setCurrentIndex(upcomingVideoIndex);
   };
-
+  const swapCities = () => {
+    
+    setSource(destination);
+    setDestination(source);
+    console.log(source+","+destination)
+  };
   useEffect(() => {
     if (loadedVideos > -1) {
       setIsLoading(false);
@@ -85,13 +93,18 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-const handelSearch = () => {
-  navigate(
-    `/buses?source=${encodeURIComponent(source)}&destination=${encodeURIComponent(
-      destination
-    )}&date=${encodeURIComponent(date)}`
-  );
-}
+  const handelSearch = () => {
+    if (!source || !destination || !date) {
+      toast.warning("Please fill in all fields before searching for buses!");
+      return;
+    }
+  
+    navigate(
+      `/buses?source=${encodeURIComponent(source)}&destination=${encodeURIComponent(
+        destination
+      )}&date=${encodeURIComponent(date)}`
+    );
+  };
 
   // video source
   const getVideoSrc = (index) => `videos/Home-${index}.mp4`;
@@ -165,7 +178,8 @@ const handelSearch = () => {
 
             <p className="mb-5 max-w-64 font-robert-regular text-yellow-200">
               {/* &apos for ' */}
-              India&apos;s No. 1 Online Bus Ticket Booking Site
+              {t('home.subtitle')}
+              {/* India&apos;s No. 1 Online Bus Ticket Booking Site */}
             </p>
             {/*<input type="text"/>*/}
 
@@ -176,11 +190,14 @@ const handelSearch = () => {
             {/**/}
 
             <div className=" h-12 absolute pl-80 " id="Enterchange">
+            
               <img
                 src="/img/Stop_exchange.svg "
                 alt=""
+                onClick={swapCities}
                 className="h-12 -mt-4 "
               />
+              
             </div>
 
             {/**/}
@@ -202,7 +219,7 @@ const handelSearch = () => {
            
               <Button
                 id="Search_Bus"
-                title="Search Bus"
+                title={t('home.form.searchButton')}
                 leftIcon={<TiLocationArrow />}
                 containerClass="!bg-yellow-300 flex-center gap-1"
                 change={handelSearch}

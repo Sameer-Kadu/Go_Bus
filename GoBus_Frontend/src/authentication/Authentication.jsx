@@ -5,6 +5,7 @@ import Squares from "./Backgroung";
 import OperationOrTraveler from "./OperatorOrTraveler";
 import { loginUser, registerUser } from "../services/user";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Authentication = () => {
   const navigate = useNavigate();
@@ -25,11 +26,15 @@ const Authentication = () => {
   const handleSignIn = async () => {
     event.preventDefault();
     if (!email.trim()) {
-      alert("Please enter your email");
+    
+toast.warning("Please enter your email");
+
+      // alert("Please enter your email");
       return;
     }
     if (!password) {
-      alert("Please enter your password");
+      toast.warning("Please enter your password");
+      // alert("Please enter your password");
       return;
     }
     console.log(email + " , " + password);
@@ -49,7 +54,12 @@ const Authentication = () => {
         navigate("/adminhome");
       }
       if (data.role == "ROLE_TRAVELER") {
-        navigate("/");
+          // ✅ Check if there is a stored redirect path
+      const redirectPath = sessionStorage.getItem("redirectAfterLogin") || "/";
+      
+      // ✅ Remove it after redirecting to prevent infinite redirects
+      sessionStorage.removeItem("redirectAfterLogin");
+        navigate(redirectPath);
       }
       if (data.role == "ROLE_OPERATOR") {
 
@@ -59,7 +69,8 @@ const Authentication = () => {
           if (data.operatorDetailsEntity.approved) {
             navigate("/home");
           } else {
-            alert("Your account is not approved");
+            
+toast.info("Your account is not approved");
           }
         } else {
           navigate("/registration");
@@ -71,27 +82,33 @@ const Authentication = () => {
   const handleSignUp = async () => {
     event.preventDefault();
     if (!name.trim()) {
-      alert("Please enter your name");
+      toast.warning("Please enter your name");
+      // alert("Please enter your name");
       return;
     }
     if (!phone.trim()) {
-      alert("Please enter your phone number");
+      toast.warning("Please enter your phone number");
+      // alert("Please enter your phone number");
       return;
     }
     if (!email.trim()) {
-      alert("Please enter your email");
+      toast.warning("Please enter your email");
+      // alert("Please enter your email");
       return;
     }
     if (!password) {
-      alert("Please enter your password");
+      toast.warning("Please enter your password");
+      // alert("Please enter your password");
       return;
     }
     if (password !== reEnterPassword) {
-      alert("Passwords do not match");
+      toast.warning("Passwords do not match");
+      // alert("Passwords do not match");
       return;
     }
     if (!role) {
-      alert("Please select your role");
+      toast.warning("Please select your role");
+      // alert("Please select your role");
       return;
     }
 
@@ -201,7 +218,8 @@ const Authentication = () => {
                 placeholder="Enter your password"
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <a href="#">Forget Your Password?</a>
+              
+              <a href="#"  onClick={() => toast.info("forget password feature will be available soon! 🚀")}>Forget Your Password?</a>
               <Button
                 id="Sign_in"
                 title="Sign in"

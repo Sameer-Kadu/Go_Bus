@@ -24,16 +24,13 @@ export async function getTravelerBuses({ source, destination, date }) {
     try {
         const url = createUrl("bus/search");
 
-        const response = await axios.get(url, {
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-            },
+        const response = await axios.get(url,{
             params: { 
                 source: String(source), // Ensure source is a string
                 destination: String(destination), // Ensure destination is a string
                 date: new Date(date).toISOString().split('T')[0] // Ensure date is a valid string
             },
-        });
+    });
 
         console.log("Response:", response.data);
         return response.data;

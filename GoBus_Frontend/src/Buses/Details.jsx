@@ -3,6 +3,7 @@ import Button from "../components/Button";
 import { TiLocationArrow } from "react-icons/ti";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 
 const Details = ({ source, destination, date }) => {
   // Format the date if it exists; assume date is in "YYYY-MM-DD" format
@@ -34,13 +35,13 @@ const Details = ({ source, destination, date }) => {
           <span>{formattedDate}</span>
           <IoIosArrowForward className="mt-1" />
         </div>
-
-        <Button
+<Link to={"/"}><Button
           id="watch-trailer"
           title="Modify"
           leftIcon={<TiLocationArrow />}
           containerClass="!bg-yellow-200 w-10 flex-center gap-1"
-        />
+        /></Link>
+        
       </div>
       <hr className="border-gray-400" />
     </div>

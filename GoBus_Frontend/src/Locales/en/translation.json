@@ -1,0 +1,33 @@
+{
+    "home": {
+
+      "title": {
+        "home": "Home",
+        "about": "About",
+        "contact": "Contact",
+        "booking": "Booking",
+        "traveling": "Traveling"
+      },
+      "subtitle": "India's No. 1 Online Bus Ticket Booking Site",
+      "form": {
+        "source": {
+          "label": "From",
+          "placeholder": "Enter source city"
+        },
+        "destination": {
+          "label": "To",
+          "placeholder": "Enter destination city"
+        },
+        "date": {
+          "label": "Date",
+          "placeholder": "Select a date"
+        },
+        "searchButton": "Search Bus"
+      },
+      "loading": "Loading...",
+      "errors": {
+        "fillFields": "Please fill in all fields before searching for buses!"
+      }
+    }
+   
+  }

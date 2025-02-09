@@ -49,7 +49,9 @@ const AddBus = ({ onAddBus }) => {
     console.log("result bus added"+ Result)
     if(Result["status"] == 201)
     {
-      alert("bus added successfully")
+      toast.success("bus added successfully")
+
+      // alert("bus added successfully")
     }
     onAddBus(newBus);
     // Reset all fields after submission
@@ -359,13 +361,13 @@ const BusTable = ({ buses, onEdit, onDelete }) => {
                 <td className="px-6 py-4">
                   <div className="flex space-x-3">
                     <button
-                      onClick={() => onEdit(bus)}
+                       onClick={() => toast.info("Edit Bus feature will be available soon! 🚀")}
                       className="text-gray-600 hover:text-gray-900"
                     >
                       <Edit2 size={18} />
                     </button>
                     <button
-                      onClick={() => onDelete(bus.id)}
+                       onClick={() => toast.info("Delete Bus feature will be available soon! 🚀")}
                       className="text-red-600 hover:text-red-900"
                     >
                       <Trash2 size={18} />
@@ -459,13 +461,21 @@ const BookingsList = ({ bookings }) => {
 // Sidebar Component
 const Sidebar = ({ activeTab, onTabChange }) => {
   const menuItems = [
-    { id: "dashboard", icon: Home, label: "Dashboard" },
-    { id: "addBus", icon: Plus, label: "Add Bus" },
-    { id: "bookings", icon: Users, label: "Bookings" },
-    { id: "earnings", icon: DollarSign, label: "Earnings" },
-    { id: "feedback", icon: Star, label: "Feedback" },
-    { id: "support", icon: HelpCircle, label: "Support" },
+    { id: "dashboard", icon: Home, label: "Dashboard", available: true },
+    { id: "addBus", icon: Plus, label: "Add Bus", available: true },
+    { id: "bookings", icon: Users, label: "Bookings", available: false },
+    { id: "earnings", icon: DollarSign, label: "Earnings", available: false },
+    { id: "feedback", icon: Star, label: "Feedback", available: false },
+    { id: "support", icon: HelpCircle, label: "Support", available: false },
   ];
+
+  const handleClick = (item) => {
+    if (item.available) {
+      onTabChange(item.id);
+    } else {
+      toast.info(`"${item.label}" will be available soon! 🚀`);
+    }
+  };
 
   return (
     <div className="w-64 bg-black text-white p-6">
@@ -479,7 +489,7 @@ const Sidebar = ({ activeTab, onTabChange }) => {
         {menuItems.map((item) => (
           <button
             key={item.id}
-            onClick={() => onTabChange(item.id)}
+            onClick={() => handleClick(item)}
             className={`flex items-center space-x-3 p-2 w-full rounded-lg ${
               activeTab === item.id ? "bg-white/10" : "hover:bg-white/5"
             }`}
@@ -494,6 +504,7 @@ const Sidebar = ({ activeTab, onTabChange }) => {
 };
 
 import {useEffect } from "react";
+import { toast } from "react-toastify";
 
 const EditBus = ({ bus, onSave, onCancel }) => {
   console.log(bus);

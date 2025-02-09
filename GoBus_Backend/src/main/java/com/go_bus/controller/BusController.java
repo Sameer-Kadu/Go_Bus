@@ -3,6 +3,7 @@ package com.go_bus.controller;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,7 @@ import com.go_bus.pojos.SeatAllocationEntity;
 import com.go_bus.pojos.UserEntity;
 import com.go_bus.service.BookingService;
 import com.go_bus.service.BusScheduleService;
+import com.go_bus.service.EmailService;
 import com.go_bus.service.UserService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +46,8 @@ public class BusController {
 	    @Autowired
 	    private UserService userService;
 	
-	 
+	    @Autowired
+	    private EmailService emailService;
 	
 	@GetMapping("/search")
 	public ResponseEntity<?> searchBuses(
@@ -122,7 +125,32 @@ public class BusController {
 	                }).collect(Collectors.toList());
 
 	        schedule.setSeatAllocationEntities(updatedSeats);
-	        busScheduleService.save(schedule);  // Save the updated schedule with allocated seats
+	        busScheduleService.save(schedule);
+	        
+	        String feedbackLink = "https://gobus.com/feedback?bookingId=" + booking.getId();
+
+	        List<Map<String, String>> passengerDetails = booking.getPassengerEntities().stream()
+	        	    .map(passenger -> Map.of(
+	        	        "name", passenger.getFullName(),
+	        	        "gender", passenger.getTravellergender().toString(),
+	        	        "seatNo", String.valueOf(passenger.getSeatNo())
+	        	    ))
+	        	    .collect(Collectors.toList());
+	        
+	        
+	        // Send HTML email with passenger details
+	        emailService.sendBookingConfirmation(
+	                userEntity.getEmail(),
+	                userEntity.getName(),
+	                schedule.getRto().getRtoRegNo(),
+	                schedule.getSourceCity() + " → " + schedule.getDestinationCity(),
+	                schedule.getDepartureDate().toString(),
+	                schedule.getDepartureTime().toString(),
+	                passengerDetails,
+	                feedbackLink
+	        );
+	        
+	        // Save the updated schedule with allocated seats
 
 	        return ResponseEntity.ok("Booking successfully created and seats updated!");
 	    } catch (Exception e) {

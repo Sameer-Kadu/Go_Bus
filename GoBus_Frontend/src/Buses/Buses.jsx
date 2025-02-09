@@ -54,9 +54,12 @@ const Buses = () => {
 
 
   return (
-    <div className="">
+    <div className="flex flex-col min-h-screen">
+      {/* Navbar */}
       <Navbar classes="!text-black dark:after:bg-black" name={name} />
-      <div className="px-6 mb-5">
+  
+      {/* Main Content - Make it grow to push Footer down */}
+      <div className="px-6 mb-5 flex-grow">
         <div className="mt-20 pt-[2.5px]">
           <Details source={source} destination={destination} date={date} />
         </div>
@@ -68,14 +71,16 @@ const Buses = () => {
             <SortBy />
             <div className="overflow-auto h-[65vh] mt-4">
               {buses.map((bus) => (<BusDetails key={bus.id} bus={bus}/>))}
-              
             </div>
           </div>
         </div>
       </div>
+  
+      {/* Footer - Always at bottom */}
       <Footer />
     </div>
   );
+  
 };
 
 export default Buses;

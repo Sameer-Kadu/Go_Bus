@@ -1,0 +1,48 @@
+{
+    "home": {
+      "title": {
+        "home": "होम",
+        "about": "हमारे बारे में",
+        "contact": "संपर्क करें",
+        "booking": "बुकिंग",
+        "traveling": "यात्रा"
+      },
+      "subtitle": "भारत की नंबर 1 ऑनलाइन बस टिकट बुकिंग साइट",
+      "form": {
+        "source": {
+          "label": "से",
+          "placeholder": "शुरुआती शहर दर्ज करें"
+        },
+        "destination": {
+          "label": "तक",
+          "placeholder": "गंतव्य शहर दर्ज करें"
+        },
+        "date": {
+          "label": "दिनांक",
+          "placeholder": "दिनांक चुनें"
+        },
+        "searchButton": "बस खोजें"
+      },
+      "loading": "लोड हो रहा है...",
+      "errors": {
+        "fillFields": "कृपया बसें खोजने से पहले सभी फ़ील्ड भरें!"
+      }
+    },
+    "common": {
+      "cities": {
+        "mumbai": "मुंबई",
+        "delhi": "दिल्ली",
+        "bangalore": "बैंगलोर",
+        "chennai": "चेन्नई",
+        "kolkata": "कोलकाता",
+        "hyderabad": "हैदराबाद",
+        "pune": "पुणे",
+        "ahmedabad": "अहमदाबाद"
+      },
+      "altText": {
+        "logo": "लोगो",
+        "exchangeIcon": "स्रोत और गंतव्य बदलें",
+        "dateIcon": "दिनांक चयन आइकन"
+      }
+    }
+  }

@@ -1,0 +1,31 @@
+{
+    "home": {
+      "title": {
+        "home": "मुख्यपृष्ठ",
+        "about": "आमच्याबद्दल",
+        "contact": "संपर्क",
+        "booking": "बुकिंग",
+        "traveling": "प्रवास"
+      },
+      "subtitle": "भारतातील क्रमांक १ ऑनलाइन बस तिकीट बुकिंग साइट",
+      "form": {
+        "source": {
+          "label": "पासून",
+          "placeholder": "सुरुवातीचे शहर टाका"
+        },
+        "destination": {
+          "label": "पर्यंत",
+          "placeholder": "गंतव्य शहर टाका"
+        },
+        "date": {
+          "label": "तारीख",
+          "placeholder": "तारीख निवडा"
+        },
+        "searchButton": "बस शोधा"
+      },
+      "loading": "लोड होत आहे...",
+      "errors": {
+        "fillFields": "कृपया बस शोधण्यापूर्वी सर्व क्षेत्रे भरा!"
+      }
+    }
+  }

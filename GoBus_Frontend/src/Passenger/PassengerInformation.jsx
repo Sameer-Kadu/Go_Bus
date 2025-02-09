@@ -4,6 +4,7 @@ import PassengerForm from "./PassengerForm";
 import Button from "../components/Button";
 import { TiLocationArrow } from "react-icons/ti";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const PassengerInformation = () => {
   const location = useLocation();
@@ -28,7 +29,16 @@ const PassengerInformation = () => {
 
   // Handle Payment Process
   const handlePayment = () => {
-    navigate("/payment", { state: { selectedSeats , bus, passengerDetails } });
+    const isFormValid = passengerDetails.every(
+      (passenger) => passenger.name && passenger.gender && passenger.age
+    );
+
+    if (!isFormValid) {
+      toast.error("Please fill in all passenger details before proceeding!");
+      return;
+    }
+
+    navigate("/payment", { state: { selectedSeats, bus, passengerDetails } });
   };
 
   return (

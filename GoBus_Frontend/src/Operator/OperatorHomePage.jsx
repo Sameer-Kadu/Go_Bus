@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Bell, Settings } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Bell, LogOut, Settings } from "lucide-react";
 import {
   AddBus,
   BusTable,
@@ -9,12 +9,15 @@ import {
   EditBus,
 } from "./components";
 import { getBuses } from "../services/operator";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const OperatorHomePage = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [edit, setEdit] = useState(null);
   const [buses, setBuses] = useState([]);
   const [bookings, setBookings] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const onLoadItems = async () => {
     try {
@@ -26,7 +29,8 @@ const OperatorHomePage = () => {
       } else {
         // Fallback: set an empty array to avoid undefined
         setBuses([]);
-        alert(result && result.error ? result.error : "No data returned");
+        toast.warning(result && result.error ? result.error : "No data returned")
+        // alert(result && result.error ? result.error : "No data returned");
       }
     } catch (error) {
       console.error("Error fetching buses:", error);
@@ -46,10 +50,28 @@ const OperatorHomePage = () => {
       console.log('component is unmounted...')
     }
   }, [])
+  const dropdownRef = useRef(null);
+   // Close dropdown when clicking outside
+   useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
+  const navigate = useNavigate();
   const handleAddBus = (newBus) => {
     setBuses([...buses, { ...newBus, id: buses.length + 1 }]);
     setActiveTab("dashboard");
+  };
+  const handleLogout = () => {
+    sessionStorage.clear();
+    navigate("/auth");
   };
 
   const handleEditBus = (bus) => {
@@ -74,8 +96,8 @@ const OperatorHomePage = () => {
   const stats = [
     { label: "Total Buses", value: buses.length },
     { label: "Active Bookings", value: bookings.length },
-    { label: "Earnings", value: "$5,000" },
-    { label: "Ratings", value: "4.5/5" },
+    { label: "Earnings", value: "$0" },
+    { label: "Ratings", value: "0.0/5" },
   ];
 
   return (
@@ -93,9 +115,28 @@ const OperatorHomePage = () => {
               <button className="p-2 hover:bg-gray-100 rounded-full">
                 <Bell size={20} />
               </button>
-              <button className="p-2 hover:bg-gray-100 rounded-full">
-                <Settings size={20} />
-              </button>
+               {/* ✅ Settings Dropdown - FIXED */}
+               <div ref={dropdownRef} className="relative">
+                {/* Settings Icon */}
+                <button
+                  className="p-2 hover:bg-gray-100 rounded-full"
+                  onClick={() => setShowDropdown((prev) => !prev)}
+                >
+                  <Settings size={24} />
+                </button>
+
+                {/* Dropdown Menu */}
+                {showDropdown && (
+                  <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md py-2 z-50">
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                    >
+                      <LogOut size={18} /> Logout
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 

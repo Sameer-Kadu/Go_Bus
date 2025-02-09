@@ -6,6 +6,7 @@ import PaymentSuccessModal from "./PaymentSuccess";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
 import { createBooking } from "../services/user";
+import { toast } from "react-toastify";
 const TicketSummary = () => {
 const email = sessionStorage.getItem("email");
   const location = useLocation();
@@ -54,10 +55,12 @@ const email = sessionStorage.getItem("email");
     const result = await createBooking(bookingObject);
     if(result["status"] == 200)
     {
-      alert("booking successful");
+      toast.success("booking successful")
+      // alert("booking successful");
     }
     else{
-      alert("booking failed");
+      toast.error("booking failed")
+      // alert("booking failed");
     }
     setShowSuccessModal(true); // Show payment success modal
   };

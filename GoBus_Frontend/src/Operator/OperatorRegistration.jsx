@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { registerOperator } from '../services/operator';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const OperatorRegistration = () => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     agencyName: "", // Agency name
@@ -44,7 +47,8 @@ const OperatorRegistration = () => {
     if (isValid) {
       setStep(prev => Math.min(prev + 1, 3));
     } else {
-      alert("Please fill in all required fields before proceeding.");
+      toast.warning("Please fill in all required fields before proceeding.")
+      // alert("Please fill in all required fields before proceeding.");
     }
   };
 
@@ -52,17 +56,37 @@ const OperatorRegistration = () => {
     setStep(prev => Math.max(prev - 1, 1));
   };
 
+  const [showPopup, setShowPopup] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
     const result = await registerOperator(formData);
-    if (result["status"] === 201) {
-      console.log("register successful");
+    
+    if (result.status === 201) {
+      console.log("Register successful");
+
+      // ✅ Show popup
+      setShowPopup(true);
+
+      // ✅ After 3 seconds, hide popup and redirect
+      setTimeout(() => {
+        setShowPopup(false);
+        navigate("/auth");
+      }, 3000);
     }
   };
 
   return (
     <div className="min-h-screen flex">
+  {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-md shadow-lg text-center">
+            <h2 className="text-lg font-semibold mb-2">You have registered successfully!</h2>
+            <p>We will review your profile and approve it soon.</p>
+          </div>
+        </div>
+      )}
+
       {/* Left sidebar with progress indicator */}
       <div className="w-80 bg-black text-white p-8 flex items-center justify-center min-h-screen">
         <div className="relative">

@@ -1,0 +1,31 @@
+{
+    "home": {
+      "title": {
+        "home": "首页",
+        "about": "关于我们",
+        "contact": "联系我们",
+        "booking": "订票",
+        "traveling": "旅行"
+      },
+      "subtitle": "印度第一在线巴士票务网站",
+      "form": {
+        "source": {
+          "label": "出发地",
+          "placeholder": "请输入出发城市"
+        },
+        "destination": {
+          "label": "目的地",
+          "placeholder": "请输入目的地城市"
+        },
+        "date": {
+          "label": "日期",
+          "placeholder": "请选择日期"
+        },
+        "searchButton": "搜索巴士"
+      },
+      "loading": "加载中...",
+      "errors": {
+        "fillFields": "搜索巴士前请填写所有字段！"
+      }
+    }
+  }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Confirmation</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { max-width: 600px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); }
+        h2 { color: #1a73e8; }
+        .details, .passengers { background: #f8f8f8; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        .passenger-item { padding: 5px 0; }
+        .button { display: inline-block; background: #28a745; color: white; text-decoration: none; padding: 10px 15px; border-radius: 5px; }
+        .footer { font-size: 12px; color: #888; margin-top: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🚍 Booking Confirmation</h2>
+        <p>Dear <strong>[[${travelerName}]]</strong>,</p>
+        <p>Your seat has been successfully booked. Here are your booking details:</p>
+        
+        <div class="details">
+            <p><strong>Bus Number:</strong> [[${busNumber}]]</p>
+            <p><strong>Route:</strong> [[${route}]]</p>
+            <p><strong>Departure:</strong> [[${departureDate}]] at [[${departureTime}]]</p>
+        </div>
+
+        <h3>🧑‍🤝‍🧑 Passenger Details</h3>
+        <div class="passengers">
+            <th:block th:each="passenger : ${passengers}">
+                <p class="passenger-item">
+                    <strong>Name:</strong> [[${passenger.name}]] | 
+                    <strong>Gender:</strong> [[${passenger.gender}]] | 
+                    <strong>Seat:</strong> [[${passenger.seatNo}]]
+                </p>
+            </th:block>
+        </div>
+
+        <p>We hope you have a great journey! Please take a moment to rate your experience.</p>
+        <a class="button" href="[[${feedbackLink}]]">Leave a Review</a>
+
+        <p class="footer">Thank you for choosing <strong>Go_Bus</strong>! Safe travels. 🚀</p>
+    </div>
+</body>
+</html>

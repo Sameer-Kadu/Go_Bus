@@ -47,3 +47,16 @@ export async function createBooking(bookingObject)
     return {status: 'error', error: ex}
   }
 }
+
+export async function feedback(bookingId, rating, review)
+{
+  try{
+    const url = createUrl('api/feedback')
+  const response = await axios.post(url,{bookingId, rating, review,})
+  return response;
+  }
+  catch(ex)
+  {
+    return {status: 'error', error: ex}
+  }
+}

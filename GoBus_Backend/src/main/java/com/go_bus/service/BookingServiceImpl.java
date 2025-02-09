@@ -1,5 +1,7 @@
 package com.go_bus.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,5 +19,11 @@ public class BookingServiceImpl implements BookingService {
 	    public void saveBooking(BookingEntity booking) {
 	        bookingRepository.save(booking);
 	    }
+
+		@Override
+		public Optional<BookingEntity> findById(Long bookingId) {
+			// TODO Auto-generated method stub
+			return bookingRepository.findById(bookingId);
+		}
 
 }

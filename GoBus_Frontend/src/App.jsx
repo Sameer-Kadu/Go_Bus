@@ -12,12 +12,17 @@ import TicketSummary from "./Payment/TicketSummary.jsx";
 import OperatorRegistration from './Operator/OperatorRegistration';
 import OperatorHomePage from "./Operator/OperatorHomePage.jsx";
 import AdminDashboard from './Admin/adminHome';
+import { ToastContainer } from "react-toastify";
+import Feedback from "./Feedback/feedback.jsx";
+
 
 const App = () => {
+  
   const name = sessionStorage.getItem("name");
   return (
     <Router navigator="" location="">
       <main className="relative min-h-screen w-screen overflow-x-hidden">
+      <ToastContainer position="top-right" autoClose={3000} />
         <Routes>
           {/* Main Layout: Home and About */}
           <Route
@@ -42,6 +47,7 @@ const App = () => {
           <Route path="/registration" element={<OperatorRegistration/>} />
           <Route path="/home" element={<OperatorHomePage/>} />
           <Route path="/adminHome" element={<AdminDashboard/>}/>
+          <Route path="/feedback" element={<Feedback/>}/>
         </Routes>
         
       </main>
