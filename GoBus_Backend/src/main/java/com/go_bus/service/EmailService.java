@@ -42,7 +42,7 @@ public class EmailService {
         context.setVariable("feedbackLink", feedbackLink);
 
         // Generate HTML content from Thymeleaf template
-        String htmlContent = templateEngine.process("booking-confirmation", context);
+        String htmlContent = templateEngine.process("bookingConfirmation", context);
         helper.setText(htmlContent, true);
 
         // Send email

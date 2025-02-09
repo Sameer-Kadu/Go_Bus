@@ -127,7 +127,8 @@ public class BusController {
 	        schedule.setSeatAllocationEntities(updatedSeats);
 	        busScheduleService.save(schedule);
 	        
-	        String feedbackLink = "https://gobus.com/feedback?bookingId=" + booking.getId();
+	        String feedbackLink = "https://go-bus-oarm.vercel.app/feedback?bookingId=" + booking.getBookingId();
+System.out.println("-------------"+feedbackLink+"-----------------");
 
 	        List<Map<String, String>> passengerDetails = booking.getPassengerEntities().stream()
 	        	    .map(passenger -> Map.of(
