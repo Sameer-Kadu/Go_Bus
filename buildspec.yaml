@@ -3,6 +3,8 @@ version: 0.2
 phases:
   pre_build:
     commands:
+      - set -e  # Stop execution if a command fails
+      - cd GoBus_Backend  # Navigate to backend directory
       - mvn clean install
       - echo Logging in to Amazon ECR...
       - aws --version
@@ -23,16 +25,12 @@ phases:
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
-      - printf '[{"name":"course-service","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-      - echo Writing image definitions file...
-      # add your container name
       - DOCKER_CONTAINER_NAME=go_bus_backend
       - printf '[{"name":"%s","imageUri":"%s"}]' $DOCKER_CONTAINER_NAME $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-      - echo $DOCKER_CONTAINER_NAME
       - echo printing imagedefinitions.json
       - cat imagedefinitions.json
 
 artifacts:
   files:
-    - imagedefinitions.json
-    - target/*.jar
+    - GoBus_Backend/imagedefinitions.json  # Correct path for artifacts
+    - GoBus_Backend/target/*.jar  # Correct path for JAR file
