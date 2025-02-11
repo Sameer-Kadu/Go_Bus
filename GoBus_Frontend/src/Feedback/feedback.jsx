@@ -23,7 +23,7 @@ const Feedback = () => {
       return;
     }
 
-   const response = feedback(bookingId, rating, review);
+   const response = await feedback(bookingId, rating, review);
 
       if (response.status === 200) {
         setSubmitted(true);
