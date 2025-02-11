@@ -71,12 +71,13 @@ const Buses = () => {
           </div>
           <div>
             <SortBy />
-            <div className="overflow-auto h-[65vh] mt-4">
-              <div className="flex gap-4 overflow-x-auto">
+           
+            <div className="overflow-auto overflow-x-auto h-[65vh] mt-4">
+             
                 {buses.map((bus) => (
                   <BusDetails key={bus.id} bus={bus} />
                 ))}
-              </div>
+              
             </div>
           </div>
         </div>
