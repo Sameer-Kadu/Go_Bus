@@ -1,17 +1,18 @@
 # Go_Bus - Online Bus Ticket Booking System
 
+[![Vercel](https://vercelbadge.vercel.app/api/Sameer-Kadu/Go_Bus)](https://go-bus-oarm.vercel.app/)
+![Vercel](https://img.shields.io/github/deployments/Sameer-Kadu/Go_Bus/production?label=Vercel)  
+![License](https://img.shields.io/github/license/Sameer-Kadu/Go_Bus)  
+![Issues](https://img.shields.io/github/issues/Sameer-Kadu/Go_Bus)  
+![Stars](https://img.shields.io/github/stars/Sameer-Kadu/Go_Bus?style=social)  
+![Forks](https://img.shields.io/github/forks/Sameer-Kadu/Go_Bus?style=social)
 
 ## Screenshots
 ![Homepage](screenshots/homepage.png)
 
 
 
-[![Vercel](https://vercelbadge.vercel.app/api/Sameer-Kadu/Go_Bus)](https://go-bus-oarm.vercel.app/)
-![Vercel](https://img.shields.io/github/deployments/Sameer-Kadu/Go_Bus/production?label=Vercel)  
-![License](https://img.shields.io/github/license/Sameer-Kadu/Go_Bus)  
-![Issues](https://img.shields.io/github/issues/Sameer-Kadu/Go_Bus)  
-![Stars](https://img.shields.io/github/stars/Sameer-Kadu/Go_Bus?style=social)  
-![Forks](https://img.shields.io/github/forks/Sameer-Kadu/Go_Bus?style=social)  
+  
 
 
 
