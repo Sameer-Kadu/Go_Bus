@@ -1,15 +1,15 @@
 # Go_Bus - Online Bus Ticket Booking System
 
-## Screenshots
-![Homepage](screenshots/homepage.png)
+![Build](https://img.shields.io/github/actions/workflow/status/Sameer-Kadu/Go_Bus/build.yml)  
+![License](https://img.shields.io/github/license/Sameer-Kadu/Go_Bus)  
+![Issues](https://img.shields.io/github/issues/Sameer-Kadu/Go_Bus)  
+![Stars](https://img.shields.io/github/stars/Sameer-Kadu/Go_Bus?style=social)  
+![Forks](https://img.shields.io/github/forks/Sameer-Kadu/Go_Bus?style=social)  
 
 
 
-![Build](https://img.shields.io/github/actions/workflow/status/your-username/go_bus/build.yml)  
-![License](https://img.shields.io/github/license/your-username/go_bus)  
-![Issues](https://img.shields.io/github/issues/your-username/go_bus)  
-![Stars](https://img.shields.io/github/stars/your-username/go_bus?style=social)  
-![Forks](https://img.shields.io/github/forks/your-username/go_bus?style=social)
+
+
 
 ## Overview
 Go_Bus is an online bus ticket booking platform designed to provide a seamless and efficient way for travelers to book bus tickets, operators to manage their buses, and administrators to oversee the entire system. The platform is built using **Spring Boot (backend)** and **React (frontend)**, with **Docker-based deployment** on an AWS **EC2 instance**.
