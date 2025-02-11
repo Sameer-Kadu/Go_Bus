@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 //main class which help to start the program
 @CrossOrigin
 @SpringBootApplication
-@ConfigurationPropertiesScan
 public class GoBusSecurityApplication {
 
 	public static void main(String[] args) {

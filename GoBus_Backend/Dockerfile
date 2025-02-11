@@ -1,11 +1,25 @@
-FROM openjdk:17  # ✅ Use lowercase `openjdk`
+# Use Maven image to build the application
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
 WORKDIR /app
 
-# Copy the built JAR from target directory
-COPY target/go_bus_Security-0.0.1-SNAPSHOT.jar /app/app.jar  # ✅ Use "app.jar" for consistency
+# Copy the project files into the container
+COPY . .
 
-# Expose the port your Spring Boot application runs on
+# Build the application using Maven
+RUN mvn clean package -DskipTests
+
+# Use OpenJDK as the runtime environment
+FROM openjdk:17
+WORKDIR /app
+
+# Copy the built JAR file from the builder stage
+COPY --from=builder /app/target/go-bus.jar go-bus.jar
+
+# Create the uploads directory
+RUN mkdir -p /app/uploads
+
+# Expose application port
 EXPOSE 8080
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]  # ✅ Use ENTRYPOINT instead of CMD
+ENTRYPOINT ["java", "-jar", "go-bus.jar"]

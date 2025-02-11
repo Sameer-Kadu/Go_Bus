@@ -125,8 +125,12 @@ toast.info("Your account is not approved");
       const result = await registerUser(name, email, phone, password, role);
       console.log("status result " + result.status);
       if (result["status"] == 201) {
+        toast.success("Register successfully");
         setIsActive(false);
         setShowModal(false);
+      }
+      else{
+        toast.warning("Registration fail!!");
       }
     };
   
