@@ -81,12 +81,12 @@ java -jar target/go_bus.jar
 ### Frontend Setup
 1. Navigate to the frontend directory:
 ```sh
-cd GoBusFrontend
+cd GoBus_Frontend
 ```
 2. Install dependencies & start the development server:
 ```sh
 npm install
-npm start
+npm run dev
 ```
 
 ### Docker Deployment
