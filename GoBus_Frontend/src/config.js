@@ -1,3 +1,3 @@
 export const config = {
-  serverUrl: 'https://gobus.duckdns.org',
+  serverUrl: 'https://go-bus-96qs.onrender.com',
 }
