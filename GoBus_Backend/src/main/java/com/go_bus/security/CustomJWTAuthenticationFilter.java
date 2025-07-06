@@ -1,6 +1,7 @@
 package com.go_bus.security;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -12,41 +13,50 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-/*
- * OncePerRequestFilter - Base class which ensures execution once per request
- */
+
 @Component
 public class CustomJWTAuthenticationFilter extends OncePerRequestFilter {
-	@Autowired
-	private JwtUtils jwtUtils;
+    @Autowired
+    private JwtUtils jwtUtils;
 
-	@Override
-	protected void doFilterInternal(HttpServletRequest request,
-			HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException {
-		
-		System.out.println("inside filter class");
-		
-		// 1. Check authorization header from incoming request
-		String authHeader=request.getHeader("Authorization");
-		
-		System.out.println(authHeader);
-		
-		//2. Check if its not null n starts with - Bearer
-		if(authHeader != null && authHeader.startsWith("Bearer ")) {
-			//3. extract JWT
-			String jwt=authHeader.substring(7);
-			//4. Simply invoke JWT utils 's method for JWT validation n getting 
-			//Authentication object.
-			Authentication authentication = jwtUtils.populateAuthenticationTokenFromJWT(jwt);
-			//5. upon successful verification , store auth object under spring sec ctx holder
-			SecurityContextHolder.getContext().setAuthentication(authentication);
-			System.out.println("saved auth details under spring sec ctx!!!!");
-		}
-		//continue with remaining filter chain.
-		filterChain.doFilter(request, response);
-		
+    // List of public endpoints to skip JWT filtering
+    private static final List<String> PUBLIC_PATHS = List.of(
+        "/User/signup",
+        "/User/signin",
+        "/bus/search",
+        "/swagger-ui",
+        "/swagger-ui/",
+        "/v3/api-docs"
+    );
 
-	}
+    @Override
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain)
+            throws ServletException, IOException {
 
+        String path = request.getRequestURI();
+        System.out.println("Inside filter class. Request path: " + path);
+
+        // Skip JWT processing for public paths
+        for (String publicPath : PUBLIC_PATHS) {
+            if (path.equals(publicPath) || path.startsWith(publicPath + "/")) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+        }
+
+        // Check for Authorization header
+        String authHeader = request.getHeader("Authorization");
+        System.out.println("Authorization Header: " + authHeader);
+
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String jwt = authHeader.substring(7);
+            Authentication authentication = jwtUtils.populateAuthenticationTokenFromJWT(jwt);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            System.out.println("Saved auth details under Spring Security context");
+        }
+
+        filterChain.doFilter(request, response);
+    }
 }
